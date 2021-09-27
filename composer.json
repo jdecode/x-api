@@ -53,8 +53,10 @@
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
         ],
-        "phpunit": "vendor/bin/phpunit --color=always",
-        "phpcs": "vendor/bin/phpcs app --standard=PSR12"
+        "cghooks": "vendor/bin/cghooks",
+        "phpcs": "vendor/bin/phpcs app --standard=PSR12",
+        "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
+        "phpunit": "vendor/bin/phpunit --color=always"
     },
     "extra": {
         "laravel": {
@@ -65,8 +67,9 @@
         },
         "hooks": {
             "pre-commit": [
-                "phpcs",
-                "phpunit"
+                "composer run phpcs",
+                "composer run phpcbf",
+                "composer run phpunit"
             ]
         }
     },
