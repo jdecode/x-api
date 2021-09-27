@@ -54,6 +54,10 @@
             "dont-discover": [
                 "barryvdh/laravel-ide-helper"
             ]
+        },
+        "hooks": {
+            "pre-commit": "chmod +x .deploy/pre_commit.sh && .deploy/pre_commit.sh",
+            "pre-push": "chmod +x .deploy/pre_push.sh && .deploy/pre_push.sh"
         }
     },
     "config": {
