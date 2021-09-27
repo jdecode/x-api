@@ -1,6 +1,5 @@
 #!/bin/bash
 # Basic pre-commit script
-echo "exiting" && exit 1
 EXIT_CODE=0
 
 chmod +x ./.deploy/commands/*.sh

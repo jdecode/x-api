@@ -2,12 +2,12 @@
 # Laravel boilerplate githook script
 
 # PHP Lint
-if [[ $CIRCLECI == true ]]
-then
+# if [[ $CIRCLECI == true ]]
+# then
     composer run parallel-lint
-else
-    docker exec laravel-boilerplate composer run parallel-lint
-fi
+# else
+#     docker exec laravel-boilerplate composer run parallel-lint
+# fi
 
 
 RESULT=$?

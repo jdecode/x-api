@@ -3,12 +3,12 @@
 
 # PHP CodeSniffer
 
-if [[ $CIRCLECI == true ]]
-then
+# if [[ $CIRCLECI == true ]]
+# then
     composer run phpcs
-else
-    docker exec laravel-boilerplate composer run phpcs
-fi
+# else
+#     docker exec laravel-boilerplate composer run phpcs
+# fi
 
 RESULT=$?
 [[ $RESULT -eq 0 ]] &&

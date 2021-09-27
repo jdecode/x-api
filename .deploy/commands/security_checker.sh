@@ -3,12 +3,12 @@
 
 # Enlightn Security Checker
 
-if [[ $CIRCLECI == true ]]
-then
+# if [[ $CIRCLECI == true ]]
+# then
     composer run security-checker
-else
-    docker exec laravel-boilerplate composer run security-checker
-fi
+# else
+#     docker exec laravel-boilerplate composer run security-checker
+# fi
 
 RESULT=$?
 [[ $RESULT -eq 0 ]] &&

@@ -5,9 +5,9 @@ EXIT_CODE=0
 
 # PHPUnit
 
-if [[ $CIRCLECI == true ]]
-then
+# if [[ $CIRCLECI == true ]]
+# then
    composer run phpunit
-else
-    docker exec laravel-boilerplate composer run phpunit
-fi
+# else
+#     docker exec laravel-boilerplate composer run phpunit
+# fi
