@@ -1,0 +1,2 @@
+FROM jdecode/xdev:laravel
+

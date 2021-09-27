@@ -1,0 +1,44 @@
+version : "3"
+services:
+  xdev-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: xdev-web
+    depends_on:
+      - xdev-pg
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_DEBUG: 'true'
+      APP_NAME: 'x-dev | Laravel Boilerplate for the 10-x developer'
+      APP_ENV: 'local'
+      #APP_KEY: ''
+      APP_URL: 'http://210.92.5.1'
+      DB_CONNECTION: 'pgsql'
+      DATABASE_URL: 'pgsql://postgres:docker@xdev-pg:5432/postgres'
+    networks:
+      xdev-network:
+        ipv4_address: 210.92.5.1
+
+  xdev-pg:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: docker
+    container_name: xdev-pg
+    networks:
+      xdev-network:
+        ipv4_address: 210.92.5.2
+
+
+# On-disk storage of DB data, when containers are stopped/removed
+volumes:
+  xdev-pg-disk: {}
+
+# Local network for services running using this docker-compose config
+networks:
+  xdev-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 210.92.0.0/16
