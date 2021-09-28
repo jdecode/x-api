@@ -12,10 +12,4 @@ class Controller extends BaseController
     use AuthorizesRequests;
     use DispatchesJobs;
     use ValidatesRequests;
-
-    public function functionName(int $var = null)
-    {
-        echo $var;
-        # code...
-    }
 }
