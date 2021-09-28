@@ -60,7 +60,6 @@
         "phpunit": "vendor/bin/phpunit --color=always",
         "phpcs": "vendor/bin/phpcs app --standard=PSR12 --colors -p",
         "phpmd": "vendor/bin/phpmd . text .deploy/phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests --ignore-violations-on-exit",
-        "parallel-lint": "vendor/bin/parallel-lint --exclude vendor . --colors",
         "security-checker": "vendor/bin/security-checker security:check"
     },
     "extra": {
