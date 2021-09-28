@@ -12,10 +12,12 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.6",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "squizlabs/php_codesniffer": "3.*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
+        "brainmaestro/composer-git-hooks": "^2.8",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
@@ -50,13 +52,27 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ]
+        ],
+        "cghooks": "vendor/bin/cghooks",
+        "phpcs": "vendor/bin/phpcs app --standard=PSR12",
+        "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
+        "phpunit": "vendor/bin/phpunit --color=always"
     },
     "extra": {
         "laravel": {
             "dont-discover": [
                 "barryvdh/laravel-ide-helper",
                 "laravel/telescope"
+            ]
+        },
+        "hooks": {
+            "pre-commit": [
+                "composer run phpcs",
+                "composer run phpcbf",
+                "composer run phpunit"
+            ],
+            "pre-push": [
+                "composer run phpunit"
             ]
         }
     },
