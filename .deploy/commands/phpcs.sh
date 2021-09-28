@@ -7,7 +7,7 @@ if [[ $CIRCLECI == true ]]
 then
     composer run phpcs
 else
-    docker exec laravel-boilerplate composer run phpcs
+    docker exec xdev-web composer run phpcs
 fi
 
 RESULT=$?

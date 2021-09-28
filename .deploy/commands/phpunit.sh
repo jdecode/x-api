@@ -9,5 +9,5 @@ if [[ $CIRCLECI == true ]]
 then
    composer run phpunit
 else
-    docker exec laravel-boilerplate composer run phpunit
+    docker exec xdev-web composer run phpunit
 fi
