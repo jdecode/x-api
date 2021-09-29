@@ -15,8 +15,7 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.6",
-        "laravel/tinker": "^2.5",
-        "squizlabs/php_codesniffer": "3.*"
+        "laravel/tinker": "^2.5"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
@@ -28,7 +27,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpmd/phpmd": "^2.10",
-        "squizlabs/php_codesniffer": "^3.6"
+        "squizlabs/php_codesniffer": "3.*",
         "pestphp/pest": "^1.20",
         "pestphp/pest-plugin-laravel": "^1.1",
         "phpunit/phpunit": "^9.3.3"
@@ -51,7 +50,11 @@
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi",
+            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'"
+        ],
+        "post-install-cmd": [
+            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
@@ -62,7 +65,7 @@
         "cghooks": "vendor/bin/cghooks",
         "phpcs": "vendor/bin/phpcs app --standard=PSR12 --colors -p",
         "phpmd": "vendor/bin/phpmd . text .deploy/phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests --ignore-violations-on-exit",
-        "security-checker": "vendor/bin/security-checker security:check"
+        "security-checker": "vendor/bin/security-checker security:check",
         "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
         "phpunit": "vendor/bin/phpunit --color=always"
     },
@@ -71,16 +74,6 @@
             "dont-discover": [
                 "barryvdh/laravel-ide-helper",
                 "laravel/telescope"
-            ]
-        },
-        "hooks": {
-            "pre-commit": [
-                "composer run phpcs",
-                "composer run phpcbf",
-                "composer run phpunit"
-            ],
-            "pre-push": [
-                "composer run phpunit"
             ]
         },
         "hooks": {
