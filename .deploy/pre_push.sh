@@ -5,9 +5,6 @@ EXIT_CODE=0
 
 chmod +x ./.deploy/commands/*.sh
 
-# Security Checker
-./.deploy/commands/security_checker.sh || EXIT_CODE=1
-
 # PHPUnit
 ./.deploy/commands/phpunit.sh || EXIT_CODE=1
 
