@@ -68,7 +68,8 @@
         "phpmd": "vendor/bin/phpmd . text .deploy/phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests --ignore-violations-on-exit",
         "security-checker": "vendor/bin/security-checker security:check",
         "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
-        "phpunit": "vendor/bin/phpunit --color=always"
+        "phpunit": "vendor/bin/phpunit --color=always",
+        "parallel-lint": "vendor/bin/parallel-lint --exclude vendor . --colors"
     },
     "extra": {
         "laravel": {
