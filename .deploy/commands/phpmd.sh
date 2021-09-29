@@ -12,6 +12,6 @@ fi
 
 RESULT=$?
 [[ $RESULT -eq 0 ]] &&
-echo -e "\e[32m\n\t*************************\n\t*  PHP-MD check passed  *\n\t*************************\n\n"
+echo -e "\e[32m\n\t*************************\n\t*  PHP-MD check passed  *\n\t*************************\e[m\n\n"
 
 exit $RESULT
