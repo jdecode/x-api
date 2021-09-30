@@ -12,9 +12,9 @@ jobs:
     docker:
       - image: svikramjeet/newman
     environment:
-      - CIRCLE_PROJECT_REPONAME: xdev-web
+      - CIRCLE_PROJECT_REPONAME: fl-laravel_boilerplate
       - REVIEWEE_URL: https://api.reviewee.it
-      - COMMITS_CHECK_ENDPOINT:  repository/xdev-web/haveRejectedCommits
+      - COMMITS_CHECK_ENDPOINT:  repository/${CIRCLE_PROJECT_REPONAME}/haveRejectedCommits
       - COMMITS_CHECK_INDICATOR: \"success\":true
     steps:
       - run:
@@ -29,9 +29,9 @@ jobs:
           command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
 
   build:
-    working_directory: ~/xdev-web
+    working_directory: ~/code
     docker:
-      - image: jdecode/xdev:laravel
+      - image: jdecode/laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
@@ -57,13 +57,13 @@ jobs:
   # This job is for reporting CI issues on Slack's #php channel (F+L)
   boilerplate_job:
     docker:
-      - image: jdecode/xdev-web
+      - image: jdecode/laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
     steps:
       - run: |
-          if [ "$CIRCLE_PROJECT_REPONAME" != "xdev-web" ]; then
+          if [ "$CIRCLE_PROJECT_REPONAME" != "fl-laravel_boilerplate" ]; then
               cat << EOF
               This job is meant to be run for boilerplate only and not on projects.
               Please make the following changes to circle-ci config file
