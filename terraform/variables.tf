@@ -9,7 +9,6 @@ variable "heroku_pipeline_name" {}
 
 
 # Apps variables
-variable "heroku_development_app" {}
 variable "heroku_staging_app" {}
 variable "heroku_production_app" {}
 variable "heroku_region" {}
@@ -18,14 +17,6 @@ variable "heroku_app_buildpacks" {
   type = list
 }
 
-
-# Addons variable development
-variable "heroku_development_database" {}
-variable "heroku_development_newrelic" {}
-variable "heroku_development_papertrail" {}
-variable "heroku_development_rollbar" {}
-variable "heroku_development_scheduler" {}
-variable "heroku_development_redis" {}
 
 
 # Addons variable staging

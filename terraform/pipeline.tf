@@ -4,12 +4,6 @@ resource "heroku_pipeline" "pipeline" {
   name = var.heroku_pipeline_name
 }
 
-resource "heroku_pipeline_coupling" "development" {
-  app      = heroku_app.development.name
-  pipeline = heroku_pipeline.pipeline.id
-  stage    = "development"
-}
-
 resource "heroku_pipeline_coupling" "staging" {
   app      = heroku_app.staging.name
   pipeline = heroku_pipeline.pipeline.id

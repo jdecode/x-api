@@ -1,24 +1,5 @@
 # Addons
 
-# development Addons
-resource "heroku_addon" "database-development" {
-  app  = heroku_app.development.name
-  plan = var.heroku_development_database
-}
-resource "heroku_addon" "newrelic-development" {
-  app = heroku_app.development.name
-  plan = var.heroku_development_newrelic
-}
-resource "heroku_addon" "papertrail-development" {
-  app = heroku_app.development.name
-  plan = var.heroku_development_papertrail
-}
-resource "heroku_addon" "rollbar-development" {
-  app = heroku_app.development.name
-  plan = var.heroku_development_rollbar
-}
-
-
 # staging Addons
 resource "heroku_addon" "database-staging" {
   app  = heroku_app.staging.name
