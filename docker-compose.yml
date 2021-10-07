@@ -11,7 +11,7 @@ services:
       - .:/var/www/html
     environment:
       APP_DEBUG: 'true'
-      APP_NAME: 'x-dev | Laravel Boilerplate for the 10-x developer'
+      APP_NAME: 'F+L Laravel Boilerplate'
       APP_ENV: 'local'
       #APP_KEY: ''
       APP_URL: 'http://210.92.5.1'
