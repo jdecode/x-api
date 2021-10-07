@@ -5,7 +5,7 @@ if [[ $CIRCLECI == true ]]
 then
     composer run parallel-lint
 else
-    docker exec xdev-web composer run parallel-lint
+    docker exec laravel-api composer run parallel-lint
 fi
 
 

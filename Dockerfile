@@ -1,2 +1,2 @@
-FROM jdecode/xdev:laravel
+FROM jdecode/fl-laravel-boilerplate
 

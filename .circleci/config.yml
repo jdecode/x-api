@@ -31,7 +31,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: jdecode/laravel-boilerplate:latest
+      - image: jdecode/fl-laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
@@ -57,7 +57,7 @@ jobs:
   # This job is for reporting CI issues on Slack's #php channel (F+L)
   boilerplate_job:
     docker:
-      - image: jdecode/laravel-boilerplate:latest
+      - image: jdecode/fl-laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
