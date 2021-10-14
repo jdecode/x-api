@@ -5,21 +5,14 @@
 version: 2
 notify:
   webhooks:
-    # Reviewee webhook, to receive CircleCI build status
-    - url: https://api.reviewee.it/notification/ci
+    # Custom webhook, to receive CircleCI build status (using dummy URL as example)
+    - url: https://webhook.com?type=circleci
 jobs:
+  # Deploy code on a dummy app on Heroku, and run Postman test cases against the installation (if any)
   api_tests:
     docker:
       - image: svikramjeet/newman
-    environment:
-      - CIRCLE_PROJECT_REPONAME: fl-laravel_boilerplate
-      - REVIEWEE_URL: https://api.reviewee.it
-      - COMMITS_CHECK_ENDPOINT:  repository/${CIRCLE_PROJECT_REPONAME}/haveRejectedCommits
-      - COMMITS_CHECK_INDICATOR: \"success\":true
     steps:
-      - run:
-          name: Check rejected commits
-          command: wget ${REVIEWEE_URL}/${COMMITS_CHECK_ENDPOINT} -q -O - | grep -q ${COMMITS_CHECK_INDICATOR}
       - checkout
       - run:
           name: Heroku API-test App Deploy
@@ -31,7 +24,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: jdecode/fl-laravel-boilerplate:latest
+      - image: jdecode/xdev-laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
@@ -54,16 +47,15 @@ jobs:
           command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
 
   # Please remove this job when cloning the repo for your project
-  # This job is for reporting CI issues on Slack's #php channel (F+L)
   boilerplate_job:
     docker:
-      - image: jdecode/fl-laravel-boilerplate:latest
+      - image: jdecode/xdev-laravel-boilerplate:latest
       - image: postgres:latest
         environment:
           POSTGRES_PASSWORD: docker
     steps:
       - run: |
-          if [ "$CIRCLE_PROJECT_REPONAME" != "fl-laravel_boilerplate" ]; then
+          if [ "$CIRCLE_PROJECT_REPONAME" != "xdev-laravel_boilerplate" ]; then
               cat << EOF
               This job is meant to be run for boilerplate only and not on projects.
               Please make the following changes to circle-ci config file
@@ -72,12 +64,6 @@ jobs:
           EOF
               exit 1
           fi
-      - run:
-          name: Check rejected commits
-          command: wget ${REVIEWEE_URL}/repository/${CIRCLE_PROJECT_REPONAME}/haveRejectedCommits -q -O - | grep -q ${COMMITS_CHECK_INDICATOR}
-          environment:
-            - REVIEWEE_URL: https://api.reviewee.it
-            - COMMITS_CHECK_INDICATOR: \"success\":true
       - checkout
       - restore_cache:
           keys:

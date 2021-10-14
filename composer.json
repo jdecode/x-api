@@ -15,7 +15,9 @@
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
         "laravel/telescope": "^4.6",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "rollbar/rollbar-laravel": "^7.0",
+        "stackkit/laravel-google-cloud-tasks-queue": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.10",
