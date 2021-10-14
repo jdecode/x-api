@@ -18,6 +18,7 @@ services:
       DB_CONNECTION: 'pgsql'
       DATABASE_URL: 'pgsql://postgres:docker@laravel-pg:5432/postgres'
       ROLLBAR_TOKEN: ''
+      SENTRY_DSN: ''
     networks:
       laravel-api-network:
         ipv4_address: 210.101.1.1

@@ -17,6 +17,7 @@
         "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
         "rollbar/rollbar-laravel": "^7.0",
+        "sentry/sentry-laravel": "^2.9",
         "stackkit/laravel-google-cloud-tasks-queue": "^2.1"
     },
     "require-dev": {
