@@ -1,0 +1,152 @@
+########################################################################
+################# Note about this cloudbuild.yaml file #################
+#
+# Feel free to change anything in this file based on your project setup.artifacts:
+# E.g.
+# If there is no need/usage of queue management, then feel free to remove ENV VARS for
+# QUEUE or STACKKIT options (again, depending on the needs of the project)
+#
+########################################################################
+
+
+steps:
+  # build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [
+        'build',
+        '--no-cache',
+        '-t',
+        '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/${_CLOUD_RUN_SERVICE}:$COMMIT_SHA',
+        '.'
+    ]
+    id: Build
+
+  # push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/${_CLOUD_RUN_SERVICE}:$COMMIT_SHA']
+    id: Push
+
+  # Deploy container image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+        'beta',
+        'run',
+        'deploy',
+        '--allow-unauthenticated',
+        '${_CLOUD_RUN_SERVICE}',
+        '--image', '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_CLOUD_RUN_SERVICE:$COMMIT_SHA',
+        '--region', '$_DEPLOY_REGION',
+        '--platform', 'managed',
+        '--memory', '256Mi',
+        '--timeout', '30',
+
+        ##########################################################
+        ################# Note about ENV VARS ####################
+        # ENV VARS are used
+        # Or
+        # Update the secret names in the "--update-secrets" option below to match the ones that are being used
+        # Or
+        # Use ENV(ironment) VAR(iable)S - remember that ENV VARS are visible in Console (not secure/hidden)
+        ##########################################################
+        '--update-env-vars',
+        '
+          APP_ENV=${_APP_ENV},
+          APP_DEBUG=${_APP_DEBUG},
+          APP_NAME=${_APP_NAME},
+          DB_CONNECTION=${_DB_CONNECTION},
+          BUILD=${_BUILD},
+          QUEUE_CONNECTION=${_QUEUE_CONNECTION},
+          QUEUE_FAILED_DRIVER=${_QUEUE_FAILED_DRIVER},
+          STACKKIT_CLOUD_TASKS_PROJECT=${_STACKKIT_CLOUD_TASKS_PROJECT},
+          STACKKIT_CLOUD_TASKS_LOCATION=${_STACKKIT_CLOUD_TASKS_LOCATION},
+          STACKKIT_CLOUD_TASKS_HANDLER=${_STACKKIT_CLOUD_TASKS_HANDLER},
+          STACKKIT_CLOUD_TASKS_QUEUE=${_STACKKIT_CLOUD_TASKS_QUEUE},
+          STACKKIT_CLOUD_TASKS_SERVICE_EMAIL=${_STACKKIT_CLOUD_TASKS_SERVICE_EMAIL}',
+
+        ##########################################################
+        ################# Note about secrets #####################
+        # All secrets should have the same name as in GCP > Security > Secret Manager
+        # Or
+        # Update the secret names in the "--update-secrets" option below to match the ones that are being used
+        # Or
+        # Use ENV(ironment) VAR(iable)S - remember that ENV VARS are visible in Console (not secure/hidden)
+        ##########################################################
+        '--update-secrets=
+          APP_KEY=Laravel_APP_KEY:1,
+          DB_HOST=Laravel_DB_host:1,
+          DB_DATABASE=Laravel_DB_database:1,
+          DB_USERNAME=Laravel_DB_username:1,
+          DB_PASSWORD=Laravel_DB_password:1,
+          SENTRY_DSN=Laravel-Sentry-DSN:1',
+
+        ##########################################################
+        ################# Add Cloud SQL Instance #################
+        ##########################################################
+        '--add-cloudsql-instances=${_CLOUD_SQL_CONNECTION_NAME}'
+    ]
+    id: Deploy
+
+  # Deploy Queue-Handler (using the same container image, with higher RAM and timeout specs) to Cloud Run
+  # Arguments have the same structure as above "Deploy"
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: [
+        'beta',
+        'run',
+        'deploy',
+        '--allow-unauthenticated',
+        '${_CLOUD_RUN_SERVICE}-queue-handler',
+        '--image', '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_CLOUD_RUN_SERVICE:$COMMIT_SHA',
+        '--region', '$_DEPLOY_REGION',
+        '--platform', 'managed',
+        '--memory', '2Gi',
+        '--timeout', '100',
+        '--update-env-vars',
+        '
+          APP_ENV=${_APP_ENV},
+          APP_DEBUG=${_APP_DEBUG},
+          APP_NAME=${_APP_NAME},
+          DB_CONNECTION=${_DB_CONNECTION},
+          BUILD=${_BUILD},
+          QUEUE_CONNECTION=${_QUEUE_CONNECTION},
+          QUEUE_FAILED_DRIVER=${_QUEUE_FAILED_DRIVER},
+          STACKKIT_CLOUD_TASKS_PROJECT=${_STACKKIT_CLOUD_TASKS_PROJECT},
+          STACKKIT_CLOUD_TASKS_LOCATION=${_STACKKIT_CLOUD_TASKS_LOCATION},
+          STACKKIT_CLOUD_TASKS_HANDLER=${_STACKKIT_CLOUD_TASKS_HANDLER},
+          STACKKIT_CLOUD_TASKS_QUEUE=${_STACKKIT_CLOUD_TASKS_QUEUE},
+          STACKKIT_CLOUD_TASKS_SERVICE_EMAIL=${_STACKKIT_CLOUD_TASKS_SERVICE_EMAIL}',
+
+        '--update-secrets=
+          APP_KEY=Laravel_APP_KEY:1,
+          DB_HOST=Laravel_DB_host:1,
+          DB_DATABASE=Laravel_DB_database:1,
+          DB_USERNAME=Laravel_DB_username:1,
+          DB_PASSWORD=Laravel_DB_password:1,
+          SENTRY_DSN=Laravel-Sentry-DSN:1',
+
+        '--add-cloudsql-instances=${_CLOUD_SQL_CONNECTION_NAME}'
+    ]
+    id: DeployQueueHandler
+
+images:
+  - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/${_CLOUD_RUN_SERVICE}:$COMMIT_SHA'
+options:
+  substitution_option: 'ALLOW_LOOSE'
+substitutions:
+  _CLOUD_RUN_SERVICE: 'xdev-web'
+  _PLATFORM: 'managed' #managed => Cloud Run
+  _GCR_HOSTNAME: 'eu.gcr.io' #GCR host for "Europe" region
+  _DEPLOY_REGION: 'europe-north1' #GCP region
+  _APP_ENV: 'production'
+  _APP_DEBUG: 'false'
+  _APP_NAME: 'xdev-web | Laravel'
+  _DB_CONNECTION: 'pgsql'
+  _BUILD: 'prod' #This is used in "Dockerfile" as ARG, to differentiate between local and GCP builds
+  _QUEUE_CONNECTION: 'cloudtasks'
+  _QUEUE_FAILED_DRIVER: 'database-uuids'
+  _STACKKIT_CLOUD_TASKS_PROJECT: 'xdev-web-19283746 (replace this with GCP Project ID, like "hello-world-1234567")'
+  _STACKKIT_CLOUD_TASKS_LOCATION: ''
+  _STACKKIT_CLOUD_TASKS_HANDLER: ''
+  _STACKKIT_CLOUD_TASKS_QUEUE: ''
+  _STACKKIT_CLOUD_TASKS_SERVICE_EMAIL: ''
+  _CLOUD_SQL_CONNECTION_NAME: ''
+
