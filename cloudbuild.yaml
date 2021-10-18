@@ -1,10 +1,21 @@
 ########################################################################
 ################# Note about this cloudbuild.yaml file #################
 #
+# This file is used to deploy a Laravel application to GCP Cloud Run
+# Additional(optional) Stackkit / Cloud Tasks Queue (for queue management in serverless mode)
+# References are for Postgres DB, and same/similar steps apply to MySQL DB as well
+#
 # Feel free to change anything in this file based on your project setup.artifacts:
 # E.g.
 # If there is no need/usage of queue management, then feel free to remove ENV VARS for
 # QUEUE or STACKKIT options (again, depending on the needs of the project)
+#
+# Reference links:
+# https://cloud.google.com/run/docs/continuous-deployment-with-cloud-build
+# https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run
+# https://cloud.google.com/sql/docs/postgres/connect-run
+# https://github.com/laravel/laravel
+# https://github.com/stackkit/laravel-google-cloud-tasks-queue
 #
 ########################################################################
 
@@ -42,8 +53,6 @@ steps:
 
         ##########################################################
         ################# Note about ENV VARS ####################
-        # ENV VARS are used
-        # Or
         # Update the secret names in the "--update-secrets" option below to match the ones that are being used
         # Or
         # Use ENV(ironment) VAR(iable)S - remember that ENV VARS are visible in Console (not secure/hidden)
@@ -66,10 +75,7 @@ steps:
         ##########################################################
         ################# Note about secrets #####################
         # All secrets should have the same name as in GCP > Security > Secret Manager
-        # Or
         # Update the secret names in the "--update-secrets" option below to match the ones that are being used
-        # Or
-        # Use ENV(ironment) VAR(iable)S - remember that ENV VARS are visible in Console (not secure/hidden)
         ##########################################################
         '--update-secrets=
           APP_KEY=Laravel_APP_KEY:1,
@@ -132,21 +138,37 @@ images:
 options:
   substitution_option: 'ALLOW_LOOSE'
 substitutions:
-  _CLOUD_RUN_SERVICE: 'xdev-web'
+
+  ########################################################################
+  ################# "GCP > Cloud Run" specific variables #################
+  ########################################################################
+  _CLOUD_RUN_SERVICE: 'xdev-web' #Cloud Run service name (change, as per project specs)
   _PLATFORM: 'managed' #managed => Cloud Run
-  _GCR_HOSTNAME: 'eu.gcr.io' #GCR host for "Europe" region
-  _DEPLOY_REGION: 'europe-north1' #GCP region
+  _GCR_HOSTNAME: 'eu.gcr.io' #GCR host for "Europe" region (change, as per region)
+  _DEPLOY_REGION: 'europe-north1' #GCP region (change, as per region)
+
+  ########################################################################
+  ################# "Laravel" specific variables #########################
+  ########################################################################
   _APP_ENV: 'production'
   _APP_DEBUG: 'false'
   _APP_NAME: 'xdev-web | Laravel'
   _DB_CONNECTION: 'pgsql'
   _BUILD: 'prod' #This is used in "Dockerfile" as ARG, to differentiate between local and GCP builds
   _QUEUE_CONNECTION: 'cloudtasks'
-  _QUEUE_FAILED_DRIVER: 'database-uuids'
+  _QUEUE_FAILED_DRIVER: 'database-uuids' #Default value
+
+  ################################################################################################
+  ################# "Laravel > Stackkit > Cloud Tasks Queue" specific variables ##################
+  ################################################################################################
   _STACKKIT_CLOUD_TASKS_PROJECT: 'xdev-web-19283746 (replace this with GCP Project ID, like "hello-world-1234567")'
   _STACKKIT_CLOUD_TASKS_LOCATION: ''
   _STACKKIT_CLOUD_TASKS_HANDLER: ''
   _STACKKIT_CLOUD_TASKS_QUEUE: ''
   _STACKKIT_CLOUD_TASKS_SERVICE_EMAIL: ''
+
+  ################################################################################################
+  ################# "GCP > Cloud SQL" connection name ############################################
+  ################################################################################################
   _CLOUD_SQL_CONNECTION_NAME: ''
 
