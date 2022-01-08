@@ -8,19 +8,18 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-pdo": "*",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
         "laravel/sanctum": "^2.11",
-        "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
-        "rollbar/rollbar-laravel": "^7.0",
         "sentry/sentry-laravel": "^2.9",
         "stackkit/laravel-google-cloud-tasks-queue": "^2.1"
     },
     "require-dev": {
+        "laravel/telescope": "^4.6",
         "barryvdh/laravel-ide-helper": "^2.10",
         "brainmaestro/composer-git-hooks": "^2.8",
         "enlightn/security-checker": "^1.9",
@@ -49,16 +48,38 @@
         }
     },
     "scripts": {
+        "setup": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "chmod -R 777 storage bootstrap",
+            "php artisan key:generate",
+            "php artisan key:generate --env=testing"
+        ],
+        "tests": [
+            "@pre-commit",
+            "@pre-push"
+        ],
+        "pre-commit": [
+            "@composer run parallel-lint",
+            "@composer run phpcs",
+            "@composer run phpmd",
+            "@composer run security-checker"
+        ],
+        "pre-push": [
+            "@composer run phpunit"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi",
-            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'"
+            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+            "@setup"
         ],
         "post-install-cmd": [
-            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'"
+            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+            "@setup",
+            "@tests"
         ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
@@ -72,7 +93,8 @@
         "phpmd": "vendor/bin/phpmd . text .deploy/phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests",
         "security-checker": "vendor/bin/security-checker security:check",
         "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
-        "phpunit": "vendor/bin/phpunit --color=always",
+        "phpunit": "vendor/bin/phpunit --color=always --stop-on-error --stop-on-failure",
+        "pest": "vendor/bin/pest --color=always",
         "parallel-lint": "vendor/bin/parallel-lint --exclude vendor . --colors"
     },
     "extra": {
@@ -90,12 +112,10 @@
                 ]
             },
             "pre-commit": [
-                "chmod +x .deploy/pre_commit.sh",
-                ".deploy/pre_commit.sh"
+                "docker-compose exec -T xdev-api composer run pre-commit"
             ],
             "pre-push": [
-                "chmod +x .deploy/pre_push.sh",
-                ".deploy/pre_push.sh"
+                "docker-compose exec -T xdev-api composer run pre-push"
             ]
         }
     },

@@ -1,48 +1,46 @@
 version : "3"
 services:
-  laravel-api:
+  xdev-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel-api
+    container_name: xdev-api
     depends_on:
-      - laravel-pg
+      - xdev-pg
     volumes:
       - .:/var/www/html
     environment:
-      APP_DEBUG: 'true'
-      APP_NAME: 'F+L Laravel Boilerplate'
+      APP_NAME: 'The 10x dev Boilerplate | xdev'
       APP_ENV: 'local'
-      #APP_KEY: ''
-      APP_URL: 'http://210.101.1.1'
+      APP_DEBUG: 'true'
+      APP_URL: 'http://220.108.1.1'
       DB_CONNECTION: 'pgsql'
-      DATABASE_URL: 'pgsql://postgres:docker@laravel-pg:5432/postgres'
-      ROLLBAR_TOKEN: ''
       SENTRY_DSN: ''
     networks:
-      laravel-api-network:
-        ipv4_address: 210.101.1.1
+      xdev-api-network:
+        ipv4_address: 220.108.1.1
 
-  laravel-pg:
+  xdev-pg:
     image: postgres:latest
     environment:
       POSTGRES_PASSWORD: docker
-    container_name: laravel-pg
+      POSTGRES_DB: test_db
+    container_name: xdev-pg
     volumes:
-      - laravel-pg-disk:/var/lib/postgres
+      - xdev-pg-disk:/var/lib/postgres
     networks:
-      laravel-api-network:
-        ipv4_address: 210.101.1.2
+      xdev-api-network:
+        ipv4_address: 220.108.1.2
 
 
 # On-disk storage of DB data, when containers are stopped/removed
 volumes:
-  laravel-pg-disk: {}
+  xdev-pg-disk: {}
 
 # Local network for services running using this docker-compose config
 networks:
-  laravel-api-network:
+  xdev-api-network:
     ipam:
       driver: default
       config:
-        - subnet: 210.101.0.0/16
+        - subnet: 220.108.0.0/16
