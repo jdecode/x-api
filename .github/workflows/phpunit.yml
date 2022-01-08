@@ -1,14 +1,37 @@
-name: PhpUni
+name: CoQa checks
 
-on: [push]
+on:
+  push:
+    paths:
+      - '**/.php'
+      - 'composer.*'
+      - '.github/**'
+      - '.circleci/**'
 
 jobs:
-  build-test:
+  CoQa:
     runs-on: ubuntu-latest
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DATABASE: test_db
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
-    - uses: php-actions/composer@v5 # or alternative dependency management
-    - uses: php-actions/phpunit@v3
-    # ... then your own project steps ...
+    - name: Docker Compose
+      run: docker-compose up -d
+    - name: Composer install (docker-compose)
+      run: docker-compose exec -T xdev-api composer install
 

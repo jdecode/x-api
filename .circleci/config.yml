@@ -1,98 +1,18 @@
-###
-# Replace "fl-laravel_boilerplate" with your project repo name, e.g. "earth-saver-api"
-###
-
 version: 2
-notify:
-  webhooks:
+#notify:
+  #webhooks:
     # Custom webhook, to receive CircleCI build status (using dummy URL as example)
-    - url: https://webhook.com?type=circleci
+    #- url: https://webhook.com?type=circleci
 jobs:
-  # Deploy code on a dummy app on Heroku, and run Postman test cases against the installation (if any)
-  api_tests:
-    docker:
-      - image: svikramjeet/newman
+  validate:
+    machine: true
+    working_directory: ~/xdev-api
     steps:
       - checkout
-      - run:
-          name: Heroku API-test App Deploy
-          command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_DEV_APP.git HEAD:refs/heads/master
-      - run:
-          name: Postman API Tests
-          command: newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
-
-  build:
-    working_directory: ~/code
-    docker:
-      - image: jdecode/xdev-laravel-boilerplate:latest
-      - image: postgres:latest
-        environment:
-          POSTGRES_PASSWORD: docker
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            - composer-v1-
-      - run:
-          name: Install Composer
-          command: |
-            composer install -n --prefer-dist
-      - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
-      - run:
-          name: Heroku Staging Deploy
-          command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
-
-  # Please remove this job when cloning the repo for your project
-  boilerplate_job:
-    docker:
-      - image: jdecode/xdev-laravel-boilerplate:latest
-      - image: postgres:latest
-        environment:
-          POSTGRES_PASSWORD: docker
-    steps:
-      - run: |
-          if [ "$CIRCLE_PROJECT_REPONAME" != "xdev-laravel_boilerplate" ]; then
-              cat << EOF
-              This job is meant to be run for boilerplate only and not on projects.
-              Please make the following changes to circle-ci config file
-              1. Remove this job boilerplate_job
-              2. Uncomment other jobs in the "workflows" section
-          EOF
-              exit 1
-          fi
-      - checkout
-      - restore_cache:
-          keys:
-            - composer-v1-{{ checksum "composer.lock" }}
-            - composer-v1-
-      - run:
-          name: Install Composer
-          command: |
-            composer install -n --prefer-dist
-      - save_cache:
-          key: composer-v1-{{ checksum "composer.lock" }}
-          paths:
-            - vendor
-      - run:
-          name: Run pre-commit hook
-          command: bash -ex .git/hooks/pre-commit
-      - run:
-          name: Run pre-push hook
-          command: bash -ex .git/hooks/pre-push
-
+      - run: docker-compose up -d
+      - run: docker-compose exec xdev-api composer install
 workflows:
   version: 2
-  validate-and-deploy:
+  validate:
     jobs:
-      # Please uncomment below lines when cloning the repo for your project
-      # - api_tests
-      # - build:
-      #   requires:
-      #   - api_tests
-
-      # Please remove below line when cloning the repo for your project
-      - boilerplate_job
+       - validate
