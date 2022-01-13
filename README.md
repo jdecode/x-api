@@ -31,11 +31,14 @@ cd saw-api
 ```
 
 #### Update service names
-Update the service and container names in `docker-compose.yml` _to avoid conflicts with other projects using the same template_
+Update the **service names**, **container names** and **network IP addresses** in `docker-compose.yml` _to avoid conflicts with other projects using the same template_ E.g.
 - From `xdev-api` to `saw-api`
 - From `xdev-pg` to `saw-pg`
 
-Update composer.json and change the container name in the `composer install` command under pre-commit and pre-push hooks
+Tip: One simple method of using non-repeatable IPs (almost, non-repeatable) is to use the date format for first 2 octets like YYM.MDD.1.1, which could translate to (considering the date as January 13, 2022) : 220.113.1.1
+
+
+Update composer.json and change the container names to match the ones in `docker-compose.yml` above
 - From `xdev-api` to `saw-api`
 - From `xdev-pg` to `saw-pg`
 
