@@ -31,15 +31,13 @@ cd saw-api
 ```
 
 #### Update service names
-Update the service and container names in `docker-compose.yml` _to avoid conflicts with other projects using the same template_
-- From `xdev-api` to `saw-api`
-- From `xdev-pg` to `saw-pg`
+_To avoid conflicts with other projects using the same template:_
 
-Update composer.json and change the container name in the `composer install` command under pre-commit and pre-push hooks
-- From `xdev-api` to `saw-api`
-- From `xdev-pg` to `saw-pg`
-
-
+Update the service and container names from `xdev-api` to `saw-api` and from `xdev-pg` to `saw-pg` (wherever applicable) in following files: 
+ - `docker-compose.yml` : For locally running containers
+ - `composer.json` : For performing pre-commit/pre-push hooks using `docker-compose exec`, during local development and for CI tools
+ - `.circleci/config.yml` : For using the same behaviour as local development when running all validations/testing using `composer install`
+ - `.github/workflows/CoQa.yml` : For using the same behaviour as local development when running all validations/testing using `composer install`
 
 
 #### Make the docker-compose build and bring up the services, in the background
