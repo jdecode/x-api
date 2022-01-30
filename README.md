@@ -33,13 +33,13 @@ cd saw-api
 #### Update service names
 _To avoid conflicts with other projects using the same template:_
 
-Update the service and container names from `xdev-api` to `saw-api` and from `xdev-pg` to `saw-pg` (wherever applicable) in following files: 
+Update the service and container names (and IP addresses, in network sections) from `xdev-api` to `saw-api` and from `xdev-pg` to `saw-pg` (wherever applicable) in following files: 
  - `docker-compose.yml` : For locally running containers
  - `composer.json` : For performing pre-commit/pre-push hooks using `docker-compose exec`, during local development and for CI tools
  - `.circleci/config.yml` : For using the same behaviour as local development when running all validations/testing using `composer install`
  - `.github/workflows/CoQa.yml` : For using the same behaviour as local development when running all validations/testing using `composer install`
 
-
+Tip: One simple method of using non-repeatable IPs (almost, non-repeatable) is to use the date format for first 2 octets like YYM.MDD.1.1, which could translate to (considering the date as January 13, 2022) : 220.113.1.1
 #### Make the docker-compose build and bring up the services, in the background
 
 ```
