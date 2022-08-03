@@ -77,9 +77,9 @@
         "dev-setup": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@putenv CACHE_DRIVER=file",
+            "@chmoder",
             "@clear",
             "@cache-clear",
-            "@chmoder",
             "@php artisan key:generate",
             "@php artisan migrate --seed",
             "@ci",
