@@ -65,11 +65,10 @@
         "pest": "vendor/bin/pest --color=always",
         "dev-setup": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "chmod -R 777 storage bootstrap",
+            "@putenv CACHE_DRIVER=file",
             "@php artisan key:generate",
-            "@php artisan telescope:publish",
             "@php artisan migrate --seed",
-            "@tests",
+            "@ci",
             "@cghooks",
             "@ide-helper"
         ],
