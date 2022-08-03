@@ -53,6 +53,44 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "cghooks": "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+        "ide-helper": [
+            "@php artisan ide-helper:generate -n",
+            "@php artisan ide-helper:meta -n",
+            "@php artisan ide-helper:models -n"
+        ],
+        "security-checker": "vendor/bin/security-checker security:check",
+        "phpunit": "vendor/bin/phpunit --color=always",
+        "pest": "vendor/bin/pest --color=always",
+        "dev-setup": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "chmod -R 777 storage bootstrap",
+            "@php artisan key:generate",
+            "@php artisan telescope:publish",
+            "@php artisan migrate --seed",
+            "@tests",
+            "@cghooks",
+            "@ide-helper"
+        ],
+        "ci": [
+            "chmod -R 777 storage bootstrap",
+            "@tests"
+        ],
+        "pre-commit": [
+            "@composer run security-checker"
+        ],
+        "pre-push": [
+            "@composer run pest"
+        ],
+        "tests": [
+            "@pre-commit",
+            "@pre-push"
+        ],
+        "post-merge": [
+            "@php artisan migrate",
+            "composer install",
+            "echo \"\nSeed, if in need: \\e[32mphp artisan db:seed\\e[0m\"\n"
         ]
     },
     "extra": {
