@@ -2,38 +2,23 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": [
-        "framework",
-        "laravel"
-    ],
+    "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
-        "ext-pdo": "*",
-        "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.54",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5",
-        "sentry/sentry-laravel": "^2.9",
-        "stackkit/laravel-google-cloud-tasks-queue": "^2.1"
+        "php": "^8.0.2",
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^9.19",
+        "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7"
     },
     "require-dev": {
-        "laravel/telescope": "^4.6",
-        "barryvdh/laravel-ide-helper": "^2.10",
-        "brainmaestro/composer-git-hooks": "^2.8",
-        "enlightn/security-checker": "^1.9",
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
-        "mockery/mockery": "^1.4.2",
-        "nunomaduro/collision": "^5.0",
-        "php-parallel-lint/php-parallel-lint": "^1.3",
-        "phpmd/phpmd": "^2.10",
-        "squizlabs/php_codesniffer": "^3.6",
-        "pestphp/pest": "^1.20",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "phpunit/phpunit": "^9.3.3"
+        "mockery/mockery": "^1.4.4",
+        "nunomaduro/collision": "^6.1",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0"
     },
     "autoload": {
         "psr-4": {
@@ -48,75 +33,23 @@
         }
     },
     "scripts": {
-        "setup": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "chmod -R 777 storage bootstrap",
-            "php artisan key:generate",
-            "php artisan key:generate --env=testing"
-        ],
-        "tests": [
-            "@pre-commit",
-            "@pre-push"
-        ],
-        "pre-commit": [
-            "@composer run parallel-lint",
-            "@composer run phpcs",
-            "@composer run phpmd",
-            "@composer run security-checker"
-        ],
-        "pre-push": [
-            "@composer run phpunit"
-        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
         "post-update-cmd": [
-            "@php artisan vendor:publish --tag=laravel-assets --ansi",
-            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
-            "@setup"
-        ],
-        "post-install-cmd": [
-            "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
-            "@setup",
-            "@tests"
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
         ],
         "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-            "sudo chmod -R 777 storage;sudo chmod -R 777 bootstrap"
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
-        ],
-        "cghooks": "vendor/bin/cghooks",
-        "phpcs": "vendor/bin/phpcs app --standard=PSR12 --colors -p",
-        "phpmd": "vendor/bin/phpmd . text .deploy/phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests",
-        "security-checker": "vendor/bin/security-checker security:check",
-        "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
-        "phpunit": "vendor/bin/phpunit --color=always --stop-on-error --stop-on-failure",
-        "pest": "vendor/bin/pest --color=always",
-        "parallel-lint": "vendor/bin/parallel-lint --exclude vendor . --colors"
+        ]
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-                "barryvdh/laravel-ide-helper",
-                "laravel/telescope"
-            ]
-        },
-        "hooks": {
-            "config": {
-                "stop-on-failure": [
-                    "pre-commit",
-                    "pre-push"
-                ]
-            },
-            "pre-commit": [
-                "docker-compose exec -T xdev-api composer run pre-commit"
-            ],
-            "pre-push": [
-                "docker-compose exec -T xdev-api composer run pre-push"
-            ]
+            "dont-discover": []
         }
     },
     "config": {
@@ -124,7 +57,6 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "composer/package-versions-deprecated": true,
             "pestphp/pest-plugin": true
         }
     },
