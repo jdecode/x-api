@@ -6,18 +6,25 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "brainmaestro/composer-git-hooks": "v3.0.0-alpha.1",
+        "doctrine/dbal": "^3.3",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7",
         "pestphp/pest": "^1.21"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.12",
+        "enlightn/security-checker": "^1.10",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "pestphp/pest-plugin-parallel": "^1.2",
         "phpunit/phpunit": "^9.5.10",
         "spatie/laravel-ignition": "^1.0"
     },
@@ -50,7 +57,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/telescope"
+            ]
         }
     },
     "config": {
