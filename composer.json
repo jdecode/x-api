@@ -63,9 +63,23 @@
         "security-checker": "vendor/bin/security-checker security:check",
         "phpunit": "vendor/bin/phpunit --color=always",
         "pest": "vendor/bin/pest --color=always",
+        "chmoder" : "chmod -R 777 storage bootstrap && chown -R 1001:1001 \"/root\"",
+        "clear": [
+            "@php artisan config:clear",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan clear-compiled",
+            "@chmoder"
+        ],
+        "cache-clear": [
+            "@php artisan cache:clear"
+        ],
         "dev-setup": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "@putenv CACHE_DRIVER=file",
+            "@clear",
+            "@cache-clear",
+            "@chmoder",
             "@php artisan key:generate",
             "@php artisan migrate --seed",
             "@ci",
