@@ -11,7 +11,7 @@ jobs:
       - checkout
       - run: docker-compose up -d
       - run: docker-compose exec xdev-api composer install
-      - run: docker-compose exec xdev-api composer run ci
+      - run: docker-compose exec xdev-api composer run dev-setup
 workflows:
   version: 2
   validate:
