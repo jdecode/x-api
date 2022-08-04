@@ -8,6 +8,7 @@ on:
       - '.github/**'
       - '.circleci/**'
       - '.env.*'
+      - 'docker-compose.yml'
 
 jobs:
   CoQa:
