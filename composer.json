@@ -88,6 +88,8 @@
         ],
         "ci": [
             "chmod -R 777 storage bootstrap",
+            "npm run heroku-prebuild",
+            "npm run heroku-postbuild",
             "@tests"
         ],
         "pre-commit": [
