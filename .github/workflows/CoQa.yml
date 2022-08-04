@@ -37,5 +37,4 @@ jobs:
     - name: Composer install (docker-compose)
       run: docker-compose exec -T xdev-api composer install
     - name: CI checks (docker-compose)
-      run: docker-compose exec -T xdev-api composer run dev-setup
-
+      run: docker-compose exec -T xdev-api composer run ci
