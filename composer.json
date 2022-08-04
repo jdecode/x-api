@@ -63,7 +63,7 @@
         "security-checker": "vendor/bin/security-checker security:check",
         "phpunit": "vendor/bin/phpunit --color=always",
         "pest": "vendor/bin/pest --color=always",
-        "chmoder" : "chmod -R 777 storage bootstrap public/build && chown -R 1001:1001 \"/root\"",
+        "chmoder" : "chmod -R 777 storage bootstrap && chown -R 1001:1001 \"/root\"",
         "clear": [
             "@chmoder",
             "@php artisan config:clear",
