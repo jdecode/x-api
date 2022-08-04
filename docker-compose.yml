@@ -23,7 +23,6 @@ services:
       SESSION_LIFETIME: 240
       SESSION_DRIVER: 'database'
       QUEUE_CONNECTION: 'database'
-      CACHE_DRIVER: 'database'
       SENTRY_DSN: ''
     networks:
       xdev-api-network:
