@@ -93,6 +93,7 @@
             "@tests"
         ],
         "pre-commit": [
+            "@composer run pint",
             "@composer run security-checker"
         ],
         "pre-push": [
