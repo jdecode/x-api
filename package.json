@@ -2,9 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
-        "heroku-prebuild": "npm install --dev",
-        "heroku-postbuild": "npm run build"
+        "build": "vite build"
     },
     "devDependencies": {
         "axios": "^0.27",
