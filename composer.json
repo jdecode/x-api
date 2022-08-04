@@ -114,6 +114,23 @@
             "dont-discover": [
                 "laravel/telescope"
             ]
+        },
+        "hooks": {
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit",
+                    "pre-push"
+                ]
+            },
+            "pre-commit": [
+                "docker-compose exec -T xdev-api composer run pre-commit"
+            ],
+            "pre-push": [
+                "docker-compose exec -T xdev-api composer run pre-push"
+            ],
+            "post-merge": [
+                "docker-compose exec -T xdev-api composer run post-merge"
+            ]
         }
     },
     "config": {
