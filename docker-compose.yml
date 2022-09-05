@@ -1,0 +1,53 @@
+version : "3"
+services:
+  the-dark-light-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: the-dark-light-api
+    depends_on:
+      - the-dark-light-pg
+    volumes:
+      - .:/var/www/html
+    restart: always
+    ports:
+      - "2295:80"
+      - "2296:2296"
+    environment:
+      APP_NAME: 'The Dark Light : The boilerplate that we need!'
+      APP_DEBUG: 'true'
+      APP_URL: 'http://220.95.1.1'
+      DB_CONNECTION: 'pgsql'
+      QUEUE_CONNECTION: 'database'
+      XDEBUG_CONFIG: "mode=debug,coverage,develop client_host=host.docker.internal discover_client_host=1 start_with_request=yes"
+    networks:
+      the-dark-light-api-network:
+        ipv4_address: 220.95.1.1
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  the-dark-light-pg:
+    image: postgres:latest
+    ports:
+        - "2346:5432"
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: test_db
+    container_name: the-dark-light-pg
+    volumes:
+      - the-dark-light-pg-disk:/var/lib/postgres
+    networks:
+      the-dark-light-api-network:
+        ipv4_address: 220.95.1.2
+
+# On-disk storage of DB data, when containers are stopped/removed
+volumes:
+  the-dark-light-pg-disk: {}
+
+# Local network for services running using this docker-compose config
+networks:
+  the-dark-light-api-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 220.95.0.0/16
