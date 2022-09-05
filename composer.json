@@ -1,14 +1,16 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "jdecode/the-dark-light",
+    "type": "boilerplate",
+    "description": "The boilerplate we need!",
+    "keywords": ["dark", "boilerplate", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
+        "php": "^8.1",
         "guzzlehttp/guzzle": "^7.2",
+        "laravel/breeze": "^1.12",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
+        "laravel/telescope": "^4.9",
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
