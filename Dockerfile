@@ -1,1 +1,1 @@
-FROM jdecode/php-8.1:laravel-xdebug-3x
+FROM devopsfnl/image:php-8.1-laravel-node16-xdebug3
