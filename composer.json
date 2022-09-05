@@ -6,6 +6,11 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-pdo": "*",
+        "blade-ui-kit/blade-icons": "^1.3",
+        "doctrine/dbal": "^3.4",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/breeze": "^1.12",
         "laravel/framework": "^9.19",
@@ -14,13 +19,21 @@
         "laravel/tinker": "^2.7"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^2.12",
+        "brainmaestro/composer-git-hooks": "dev-master",
+        "enlightn/security-checker": "^1.10",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "pestphp/pest-plugin-parallel": "^1.2",
+        "phpmd/phpmd": "^2.12",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "^3.7"
     },
     "autoload": {
         "psr-4": {
@@ -47,11 +60,86 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "cghooks": "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+        "ide-helper": [
+            "@php artisan ide-helper:generate -n",
+            "@php artisan ide-helper:meta -n",
+            "@php artisan ide-helper:models -n"
+        ],
+        "parallel-lint": "vendor/bin/parallel-lint --exclude vendor . --colors",
+        "phpcs": "vendor/bin/phpcs app --standard=PSR12 --colors -p",
+        "phpmd": "vendor/bin/phpmd . text phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests",
+        "security-checker": "vendor/bin/security-checker security:check",
+        "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
+        "phpunit": "vendor/bin/phpunit --color=always",
+        "pest": "vendor/bin/pest --color=always --stop-on-error --stop-on-failure",
+        "routes": "@php artisan route:list --except-vendor",
+        "chmoder" : "chmod -R 777 storage bootstrap && chown -R 1001:1001 \"/root\"",
+        "clear": [
+            "@php artisan config:clear",
+            "@php artisan route:clear",
+            "@php artisan view:clear",
+            "@php artisan clear-compiled",
+            "@chmoder"
+        ],
+        "cache-clear": [
+            "@php artisan cache:clear"
+        ],
+        "dev-setup": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
+            "@putenv CACHE_DRIVER=file",
+            "@php artisan key:generate",
+            "@php artisan migrate --seed",
+            "@cghooks",
+            "@ide-helper",
+            "@ci"
+        ],
+        "ci": [
+            "@chmoder",
+            "npm run heroku-prebuild",
+            "npm run heroku-postbuild",
+            "@tests"
+        ],
+        "pre-commit": [
+            "@composer run parallel-lint",
+            "@composer run phpcs",
+            "@composer run phpmd",
+            "@composer run security-checker"
+        ],
+        "pre-push": [
+            "@composer run pest"
+        ],
+        "tests": [
+            "@pre-commit",
+            "@pre-push"
+        ],
+        "post-merge": [
+            "@php artisan migrate",
+            "composer install",
+            "echo \"\nSeed, if in need: \\e[32mphp artisan db:seed\\e[0m\"\n"
         ]
     },
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "hooks": {
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit",
+                    "pre-push"
+                ]
+            },
+            "pre-commit": [
+                "docker-compose exec -T the-dark-light-api composer run pre-commit"
+            ],
+            "pre-push": [
+                "docker-compose exec -T the-dark-light-api composer run pre-push"
+            ],
+            "post-merge": [
+                "docker-compose exec -T the-dark-light-api composer run post-merge"
+            ]
         }
     },
     "config": {
@@ -59,7 +147,8 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "pestphp/pest-plugin": true
+            "pestphp/pest-plugin": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "minimum-stability": "dev",

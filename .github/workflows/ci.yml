@@ -1,0 +1,40 @@
+name: CI checks
+
+on:
+  push:
+    paths:
+      - '**/.php'
+      - '**/.yml'
+      - '**/.yaml'
+      - '**/.json'
+      - '.env.*'
+      - 'terraform/**'
+
+jobs:
+  CoQa:
+    runs-on: ubuntu-latest
+
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DATABASE: test_db
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Compose
+        run: docker-compose up -d
+      - name: Composer install [ + npm install && npm run build]
+        run: docker-compose exec -T the-dark-light-api composer install
+      - name: CI checks
+        run: docker-compose exec -T the-dark-light-api composer run ci

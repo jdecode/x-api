@@ -1,0 +1,43 @@
+version: 2.1
+jobs:
+  ci:
+    machine:
+      image: ubuntu-2004:202201-02
+    resource_class: medium
+    working_directory: ~/code
+    steps:
+      - checkout
+      - run:
+          name: Docker compose up, in detatched/background mode
+          command: docker-compose up -d
+      - run:
+          name: Composer install
+          command: docker-compose exec the-dark-light-api composer install -n --prefer-dist
+      - run:
+          name: CI checks
+          command: docker-compose exec the-dark-light-api composer run ci
+      - run:
+          name: Run Newman testcases [Comment out, if you do not use Postman]
+          command: docker-compose exec the-dark-light-api newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
+
+  cd:
+    machine:
+      image: ubuntu-2004:202201-02
+    resource_class: medium
+    working_directory: ~/code
+    steps:
+      - checkout
+      - run:
+          name: Heroku deploy
+          command: git push --force https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_UAT_APP_NAME.git HEAD:refs/heads/master
+
+
+workflows:
+  version: 2
+  ci-cd:
+    jobs:
+       - ci
+#      Uncomment the following line, if you want to deploy to Heroku
+#       - cd:
+#           requires:
+#             - ci
