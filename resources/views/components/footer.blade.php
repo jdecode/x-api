@@ -23,8 +23,8 @@
         </a>
     </p>
     <p>
-        <a href="https://github.com/jdecode" target="_blank" class="font-bold underline underline-offset-2">
-            <span class="text-tdl-500">jdecode</span>
+        <a href="https://github.com/{{ env('GITHUB_USERNAME', 'laravel') }}" target="_blank" class="font-bold underline underline-offset-2">
+            <span class="text-tdl-500">{{ env('GITHUB_USERNAME', 'laravel') }}</span>
         </a>
     </p>
     <p class="mt-2 clear-both">
