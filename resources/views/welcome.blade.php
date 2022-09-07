@@ -18,10 +18,33 @@
         <div
             class="
                 m-12 p-12
-                text-3xl font-bold text-center
+                text-3xl text-center
                 flex flex-col items-center
             ">
+            <span>
+                <x-application-logo></x-application-logo>
+            </span>
             <span>{{ config('app.name') }}</span>
+            <div class="mt-8 text-base">
+                <div>
+                    <a href="{{route('api.v1')}}">
+                        API base URL<br />
+                        <span class="text-tdl-500">{{route('api.v1')}}</span>
+                    </a>
+                    <a href="{{ route('api.v1') }}" target="_blank" class="text-tdl-500">
+                        <span class="material-icons-outlined">open_in_new</span>
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <a href="{{route('admin')}}">
+                        Admin Dashboard:<br />
+                        <span class="text-tdl-500">{{route('admin')}}</span>
+                    </a>
+                    <a href="{{ route('admin') }}" target="_blank" class="text-tdl-500">
+                        <span class="material-icons-outlined">open_in_new</span>
+                    </a>
+                </div>
+            </div>
         </div>
     <x-footer></x-footer>
     </body>
