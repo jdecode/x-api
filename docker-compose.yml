@@ -14,12 +14,13 @@ services:
       - "2295:80"
       - "2296:2296"
     environment:
-      APP_NAME: 'The Dark Light : The boilerplate that we need!'
+      APP_NAME: 'The Dark Light'
       APP_DEBUG: 'true'
       APP_URL: 'http://220.95.1.1'
       DB_CONNECTION: 'pgsql'
       QUEUE_CONNECTION: 'database'
       XDEBUG_CONFIG: "mode=debug,coverage,develop client_host=host.docker.internal discover_client_host=1 start_with_request=yes"
+      GITHUB_USERNAME: 'jdecode'
     networks:
       the-dark-light-api-network:
         ipv4_address: 220.95.1.1
