@@ -17,8 +17,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/api/v1', function () {
+    return ['Laravel' => app()->version()];
+})->name('api.v1');
+
+Route::get('/admin', function () {
+    return ['Laravel' => app()->version()];
+})->name('admin');
 
 require __DIR__ . '/auth.php';
+
+Route::middleware(['auth:sanctum', 'admin'])->get('/admin/dashboard', function () {
+    return view('dashboard');
+})->name('admin.dashboard');
