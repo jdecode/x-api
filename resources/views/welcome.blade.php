@@ -36,11 +36,11 @@
                     </a>
                 </div>
                 <div class="mt-4">
-                    <a href="{{route('admin')}}">
-                        Admin Dashboard:<br />
-                        <span class="text-tdl-500">{{route('admin')}}</span>
+                    <a href="{{route('admin.loginForm')}}">
+                        Admin Login:<br />
+                        <span class="text-tdl-500">{{route('admin.loginForm')}}</span>
                     </a>
-                    <a href="{{ route('admin') }}" target="_blank" class="text-tdl-500">
+                    <a href="{{ route('admin.loginForm') }}" target="_blank" class="text-tdl-500">
                         <span class="material-icons-outlined">open_in_new</span>
                     </a>
                 </div>

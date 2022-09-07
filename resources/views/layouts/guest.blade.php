@@ -13,7 +13,7 @@
     </head>
     <body class="antialiased text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col justify-between">
         <x-theme-switcher></x-theme-switcher>
-        <div class="mt-10 md:mt-20 font-sans text-gray-900 antialiased">
+        <div class="mt-10 md:mt-20 font-sans antialiased">
             {{ $slot }}
         </div>
         <x-footer></x-footer>

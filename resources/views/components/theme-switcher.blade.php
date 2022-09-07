@@ -5,7 +5,7 @@
 @php
     $theme_switcher = filter_var($theme_switcher ?? true, FILTER_VALIDATE_BOOLEAN);
 @endphp
-<div class="absolute top-0 right-0">
+<div>
     <div class="focus:outline-none p-1 ">
         <div class="flex items-center min-w-6 mr-2 ">
             @if(config('app.env') == 'local' && $helper_icons)
