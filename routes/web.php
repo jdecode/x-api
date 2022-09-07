@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,12 +18,17 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::get('/admin', function () {
-    return ['Laravel' => app()->version()];
-})->name('admin');
+Route::middleware(['auth:admin'])->group(function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/admin', 'index')->name('admin');
+        Route::get('/admin/dashboard', 'dashboard')->name('admin.dashboard');
+        Route::post('/admin/logout', 'logout')->name('admin.logout');
+    });
+});
 
-require __DIR__ . '/auth.php';
-
-Route::middleware(['auth:sanctum', 'admin'])->get('/admin/dashboard', function () {
-    return view('dashboard');
-})->name('admin.dashboard');
+Route::middleware(['guest'])->group(function () {
+    Route::controller(AdminController::class)->group(function () {
+        Route::get('/admin/login', 'loginForm')->name('admin.loginForm');
+        Route::post('/admin/login', 'login')->name('admin.login');
+    });
+});

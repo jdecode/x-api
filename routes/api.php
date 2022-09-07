@@ -18,6 +18,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('v1', function () {
-    return ['Laravel' => app()->version()];
-})->name('api.v1');
+
+Route::prefix('v1')->group(function () {
+    Route::get('/', function () {
+        return ['Laravel' => app()->version()];
+    })->name('api.v1');
+
+    require_once  __DIR__ . '/auth.php';
+});
