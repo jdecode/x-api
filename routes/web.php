@@ -15,11 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/api/v1', function () {
-    return ['Laravel' => app()->version()];
-})->name('api.v1');
+})->name('home');
 
 Route::get('/admin', function () {
     return ['Laravel' => app()->version()];
