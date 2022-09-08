@@ -1,8 +1,8 @@
 {
-    "name": "jdecode/the-dark-light",
+    "name": "founderandlightning/fl-laravel_boilerplate",
     "type": "boilerplate",
-    "description": "The boilerplate we need!",
-    "keywords": ["dark", "boilerplate", "laravel"],
+    "description": "Laravel Boilerplate | LBP",
+    "keywords": ["FounderAndLightning", "boilerplate", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -132,13 +132,13 @@
                 ]
             },
             "pre-commit": [
-                "docker-compose exec -T the-dark-light-api composer run pre-commit"
+                "docker-compose exec -T laravel-api composer run pre-commit"
             ],
             "pre-push": [
-                "docker-compose exec -T the-dark-light-api composer run pre-push"
+                "docker-compose exec -T laravel-api composer run pre-push"
             ],
             "post-merge": [
-                "docker-compose exec -T the-dark-light-api composer run post-merge"
+                "docker-compose exec -T laravel-api composer run post-merge"
             ]
         }
     },

@@ -1,55 +1,55 @@
 version : "3"
 services:
-  the-dark-light-api:
+  laravel-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: the-dark-light-api
+    container_name: laravel-api
     depends_on:
-      - the-dark-light-pg
+      - laravel-pg
     volumes:
       - .:/var/www/html
     restart: always
     ports:
-      - "2295:80"
-      - "2296:2296"
+      - "295:80"
+      - "296:296"
     environment:
       APP_NAME: 'Laravel Boilerplate'
       APP_DEBUG: 'true'
-      APP_URL: 'http://220.95.1.1'
+      APP_URL: 'http://22.95.1.1'
       DB_CONNECTION: 'pgsql'
       QUEUE_CONNECTION: 'database'
       XDEBUG_CONFIG: "mode=debug,coverage,develop client_host=host.docker.internal discover_client_host=1 start_with_request=yes"
       GITHUB_USERNAME: 'founderandlightning'
       GITHUB_REPONAME: 'fl-laravel_boilerplate'
     networks:
-      the-dark-light-api-network:
-        ipv4_address: 220.95.1.1
+      laravel-api-network:
+        ipv4_address: 22.95.1.1
     extra_hosts:
       - host.docker.internal:host-gateway
 
-  the-dark-light-pg:
+  laravel-pg:
     image: postgres:latest
     ports:
-        - "2294:5432"
+        - "297:5432"
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: test_db
-    container_name: the-dark-light-pg
+    container_name: laravel-pg
     volumes:
-      - the-dark-light-pg-disk:/var/lib/postgres
+      - laravel-pg-disk:/var/lib/postgres
     networks:
-      the-dark-light-api-network:
-        ipv4_address: 220.95.1.2
+      laravel-api-network:
+        ipv4_address: 22.95.1.2
 
 # On-disk storage of DB data, when containers are stopped/removed
 volumes:
-  the-dark-light-pg-disk: {}
+  laravel-pg-disk: {}
 
 # Local network for services running using this docker-compose config
 networks:
-  the-dark-light-api-network:
+  laravel-api-network:
     ipam:
       driver: default
       config:
-        - subnet: 220.95.0.0/16
+        - subnet: 22.95.0.0/16
