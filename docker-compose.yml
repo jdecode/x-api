@@ -14,13 +14,14 @@ services:
       - "2295:80"
       - "2296:2296"
     environment:
-      APP_NAME: 'The Dark Light'
+      APP_NAME: 'Laravel Boilerplate'
       APP_DEBUG: 'true'
       APP_URL: 'http://220.95.1.1'
       DB_CONNECTION: 'pgsql'
       QUEUE_CONNECTION: 'database'
       XDEBUG_CONFIG: "mode=debug,coverage,develop client_host=host.docker.internal discover_client_host=1 start_with_request=yes"
-      GITHUB_USERNAME: 'jdecode'
+      GITHUB_USERNAME: 'founderandlightning'
+      GITHUB_REPONAME: 'fl-laravel_boilerplate'
     networks:
       the-dark-light-api-network:
         ipv4_address: 220.95.1.1
@@ -30,7 +31,7 @@ services:
   the-dark-light-pg:
     image: postgres:latest
     ports:
-        - "2346:5432"
+        - "2294:5432"
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: test_db

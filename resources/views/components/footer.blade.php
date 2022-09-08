@@ -11,7 +11,7 @@
         <a
             class="hover:underline flex items-center justify-center relative"
             title="GitHub repo [new tab]"
-            href="https://github.com/jdecode/the-dark-light"
+            href="https://github.com/{{ env('GITHUB_USERNAME', 'laravel') }}/{{ env('GITHUB_REPONAME', 'laravel') }}"
             target="_blank">
             <span>{{ config('app.name', 'Laravel') }}</span>
             <span
