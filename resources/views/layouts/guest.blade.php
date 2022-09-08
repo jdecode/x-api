@@ -12,8 +12,10 @@
         </style>
     </head>
     <body class="antialiased text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col justify-between">
-        <x-theme-switcher></x-theme-switcher>
-        <div class="mt-10 md:mt-20 font-sans antialiased">
+        <div class="absolute top-0 right-24">
+            <x-theme-switcher helper_icons="false"></x-theme-switcher>
+        </div>
+        <div class="font-sans antialiased">
             {{ $slot }}
         </div>
         <x-footer></x-footer>
