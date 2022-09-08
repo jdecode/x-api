@@ -1,4 +1,4 @@
-<div aria-live="assertive" class="fixed inset-0 flex items-end px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
+<div aria-live="assertive" class="fixed inset-0 flex items-start px-4 py-6 pointer-events-none sm:p-6 sm:items-start"
      xmlns:x-transition="http://www.w3.org/1999/xhtml">
     <div class="w-full flex flex-col items-center space-y-4 pt-10">
         <div
@@ -20,23 +20,16 @@
             x-transition:leave-end="opacity-0"
             >
             <div class="py-6 px-8">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0">
-                        <span class="material-icons-outlined text-green-500">check_circle</span>
-                    </div>
-                    <div class="ml-3 w-0 flex-1 pt-0.5">
-                        <p class="text-sm font-medium text-gray-900 dark:text-gray-100" x-text="notification_content"></p>
-                    </div>
-                    <div class="ml-4 flex-shrink-0 flex">
-                        <button
-                            type="button"
-                            class="rounded-md inline-flex focus:outline-none"
-                            @click="$dispatch('close-notification')"
-                            >
-                            <span class="sr-only">Close</span>
-                            <span class="material-icons-outlined text-gray-500">close</span>
-                        </button>
-                    </div>
+                <div class="flex items-start justify-between">
+                    <span class="material-icons-outlined text-2xl text-green-500">check_circle</span>
+                    <span class="text-base pt-1 font-bold text-gray-900 dark:text-gray-100" x-text="notification_content"></span>
+                    <span
+                        class="rounded-md focus:outline-none cursor-pointer"
+                        @click="$dispatch('close-notification')"
+                        >
+                        <span class="sr-only">Close</span>
+                        <span class="material-icons-outlined text-xl text-gray-600 dark:text-gray-400">close</span>
+                    </span>
                 </div>
             </div>
         </div>
