@@ -28,7 +28,7 @@ class AdminController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            request()->session()->flash('status', 'You are now logged in!');
+            request()->session()->flash('flash-notification', 'You are now logged in!');
             return redirect()->intended(route('admin.dashboard'));
         }
         return back()->withErrors([
@@ -49,7 +49,7 @@ class AdminController extends Controller
 
         $request->session()->regenerateToken();
 
-        request()->session()->flash('status', 'You are now logged out!');
+        $request->session()->flash('flash-notification', 'You are now logged out!');
 
         return redirect(route('admin.loginForm'));
     }

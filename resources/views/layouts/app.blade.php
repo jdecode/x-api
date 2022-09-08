@@ -72,6 +72,12 @@
                 </main>
             </div>
             <x-notifications></x-notifications>
+            @if (session('flash-notification'))
+                <div
+                    x-cloak
+                    x-init="$dispatch('open-notification', {content: '{{ session('flash-notification') }}' } )">
+                </div>
+            @endif
         </div>
         <div class="absolute top-0 right-24 z-10">
             <x-theme-switcher helper_icons="true"></x-theme-switcher>
