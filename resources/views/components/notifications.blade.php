@@ -22,7 +22,7 @@
             <div class="py-6 px-8">
                 <div class="flex items-start justify-between">
                     <span class="material-icons-outlined text-2xl text-green-500">check_circle</span>
-                    <span class="text-base pt-1 font-bold text-gray-900 dark:text-gray-100" x-text="notification_content"></span>
+                    <span class="text-base pt-1 font-medium text-gray-900 dark:text-gray-100" x-text="notification_content"></span>
                     <span
                         class="rounded-md focus:outline-none cursor-pointer"
                         @click="$dispatch('close-notification')"
