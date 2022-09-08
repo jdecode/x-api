@@ -73,6 +73,9 @@
             </div>
             <x-notifications></x-notifications>
         </div>
+        <div class="absolute top-0 right-24 z-10">
+            <x-theme-switcher helper_icons="true"></x-theme-switcher>
+        </div>
         <x-footer></x-footer>
     </body>
 </html>

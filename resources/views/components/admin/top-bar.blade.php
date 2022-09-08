@@ -34,9 +34,6 @@
             </form>
         </div>
         <div class="ml-4 flex items-center md:ml-6">
-            <div class="absolute top-0 right-24">
-                <x-theme-switcher helper_icons="true"></x-theme-switcher>
-            </div>
             @auth
                 <div class="ml-3 relative">
                     <div>
