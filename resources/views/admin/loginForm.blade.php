@@ -1,4 +1,4 @@
-<x-guest-layout>
+<x-app-layout>
     <x-auth-card>
         <div class="mx-auto text-center">
             <a href="{{ route('home') }}">
@@ -9,9 +9,6 @@
         <div class="mx-auto text-center">
             <span class="text-gray-500 text-2xl">Admin Login</span>
         </div>
-
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')"></x-auth-session-status>
 
         <!-- Validation Errors -->
         <x-auth-validation-errors class="mb-4" :errors="$errors"></x-auth-validation-errors>
@@ -57,4 +54,4 @@
             </div>
         </form>
     </x-auth-card>
-</x-guest-layout>
+</x-app-layout>
