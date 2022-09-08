@@ -10,10 +10,11 @@
     <p>
         <a
             class="hover:underline flex items-center justify-center relative"
-            title="GitHub repo [new tab]"
+            title="{{ config('app.name', 'Laravel') }} repo [new tab]"
             href="https://github.com/{{ env('GITHUB_USERNAME', 'laravel') }}/{{ env('GITHUB_REPONAME', 'laravel') }}"
             target="_blank">
-            <span>{{ config('app.name', 'Laravel') }}</span>
+            <i class="octicons octicon-mark-github-16 pr-1 text-sm"></i>
+            <span class="text-base">{{ config('app.name', 'Laravel') }}</span>
             <span
                 title=" {{ config('app.name', 'Laravel') }}"
                 class="text-tdl-500 material-icons-outlined absolute right-0 top-0 -mr-8 -mt-3 text-4xl">bolt</span>
@@ -23,7 +24,7 @@
         </a>
     </p>
     <p>
-        <a href="https://github.com/{{ env('GITHUB_USERNAME', 'laravel') }}" target="_blank" class="font-bold underline underline-offset-2">
+        <a title="{{ env('GITHUB_USERNAME', 'laravel') }} [new tab]" href="https://github.com/{{ env('GITHUB_USERNAME', 'laravel') }}" target="_blank" class="font-bold underline underline-offset-2">
             <span class="text-tdl-500">{{ env('GITHUB_USERNAME', 'laravel') }}</span>
         </a>
     </p>
@@ -32,7 +33,8 @@
         <span class="text-tdl-500 text-lg">&hearts;</span>
         using
         <a href="https://laravel.com" target="_blank" class="underline">Laravel</a>
+        <a href="https://tailwindcss.com" target="_blank" class="underline">TailwindCSS</a>
         and
-        <a href="https://tailwindcss.com" target="_blank" class="underline">Tailwind CSS</a>
+        <a href="https://alpinejs.dev" target="_blank" class="underline">Alpine.js</a>
     </p>
 </footer>

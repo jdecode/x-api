@@ -7,6 +7,7 @@
 
         <title> {{ config('app.name', 'Laravel') }}</title>
         <link rel="stylesheet" href="{{ asset('fonts/material-icons.css') }}" />
+        <link rel="stylesheet" href="{{ asset('fonts/octicons.css') }}" />
         @vite(['resources/css/app.css', 'resources/js/app.js'])
         <style>
             [x-cloak] { display: none !important; }
