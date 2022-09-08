@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark h-full">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
             [x-cloak] { display: none !important; }
         </style>
     </head>
-    <body class="antialiased text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900">
+    <body class="antialiased text-gray-900 dark:text-gray-100 bg-gray-100 dark:bg-gray-900 min-h-screen flex flex-col justify-between">
         <div class="absolute top-0 right-0">
             <x-theme-switcher></x-theme-switcher>
         </div>
