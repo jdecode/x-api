@@ -97,8 +97,8 @@
         ],
         "ci": [
             "@chmoder",
-            "npm run heroku-prebuild",
-            "npm run heroku-postbuild",
+            "npm install",
+            "npm run build",
             "@tests"
         ],
         "pre-commit": [
