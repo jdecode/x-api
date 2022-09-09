@@ -97,7 +97,6 @@
         ],
         "ci": [
             "@chmoder",
-            "npm run update",
             "npm run heroku-prebuild",
             "npm run heroku-postbuild",
             "@tests"
