@@ -3,7 +3,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "heroku-prebuild": "npm install --dev",
+        "update": "npm install --location=global npm@latest",
+        "heroku-prebuild": "npm install --include=dev",
         "heroku-postbuild": "npm run build"
     },
     "devDependencies": {
