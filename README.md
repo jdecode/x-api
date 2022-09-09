@@ -44,6 +44,7 @@ Files to update service/container names:
 1. `.github/workflows/ci.yml`
 
 Files to update IP address:
+1. `docker-compose.yml`
 1. `.env.example`
 1. `.env.testing`
 
