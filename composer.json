@@ -75,7 +75,7 @@
         "phpunit": "vendor/bin/phpunit --color=always",
         "pest": "vendor/bin/pest --color=always --stop-on-error --stop-on-failure",
         "routes": "@php artisan route:list --except-vendor",
-        "chmoder" : "chmod -R 777 storage bootstrap && chown -R 1001:1001 \"/root\"",
+        "chmoder" : "chmod -R 777 storage bootstrap /root/.npm && chown -R 1001:1001 \"/root/.npm\"",
         "clear": [
             "@php artisan config:clear",
             "@php artisan route:clear",
