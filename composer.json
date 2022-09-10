@@ -73,7 +73,7 @@
         "security-checker": "vendor/bin/security-checker security:check",
         "phpcbf": "vendor/bin/phpcbf app --standard=PSR12",
         "phpunit": "vendor/bin/phpunit --color=always",
-        "pest": "vendor/bin/pest --color=always --stop-on-error --stop-on-failure",
+        "pest": "vendor/bin/pest --stop-on-failure --parallel",
         "routes": "@php artisan route:list --except-vendor",
         "chmoder" : "chmod -R 777 storage bootstrap /usr/lib/node_modules /usr/bin && chown -R 1001:1001 /usr/lib/node_modules /usr/bin/",
         "clear": [
