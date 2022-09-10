@@ -14,7 +14,7 @@ services:
       - "295:80"
       - "296:296"
     environment:
-      APP_NAME: 'Laravel Boilerplate'
+      APP_NAME: 'Laravel Boilerplate | LBP'
       APP_DEBUG: 'true'
       APP_URL: 'http://22.95.1.1'
       DB_CONNECTION: 'pgsql'
@@ -42,7 +42,18 @@ services:
       laravel-api-network:
         ipv4_address: 22.95.1.2
 
-# On-disk storage of DB data, when containers are stopped/removed
+  laravel-terraform:
+      build:
+        context: .
+        dockerfile: terraform/Dockerfile
+      container_name: laravel-terraform
+      environment:
+        HEROKU_API_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+      networks:
+        laravel-api-network:
+          ipv4_address: 22.95.1.3
+
+# On-disk storage of DB data, when containers are stopped
 volumes:
   laravel-pg-disk: {}
 
