@@ -1,1 +1,1 @@
-FROM hashicorp/terraform:latest
+FROM devopsfnl/image:terraform
