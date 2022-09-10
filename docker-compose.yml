@@ -47,8 +47,15 @@ services:
         context: .
         dockerfile: terraform/Dockerfile
       container_name: laravel-terraform
+      volumes:
+          - .:/var/www/html
       environment:
         HEROKU_API_KEY: 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
+        AWS_ACCESS_KEY_ID: 'xxxxxxxxxxxxxxxxxxxx'
+        AWS_SECRET_ACCESS_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        POSTMAN_API_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+        CIRCLECI_API_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
       networks:
         laravel-api-network:
           ipv4_address: 22.95.1.3
