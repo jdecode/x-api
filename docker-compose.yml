@@ -42,11 +42,11 @@ services:
       laravel-api-network:
         ipv4_address: 22.95.1.2
 
-  laravel-terraform:
+  laravel-tf:
       build:
         context: .
         dockerfile: terraform/Dockerfile
-      container_name: laravel-terraform
+      container_name: laravel-tf
       volumes:
           - .:/var/www/html
       environment:
