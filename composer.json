@@ -1,5 +1,5 @@
 {
-    "name": "founderandlightning/fl-laravel_boilerplate",
+    "name": "founderandlightning/xdev",
     "type": "boilerplate",
     "description": "Laravel Boilerplate | LBP",
     "keywords": ["FounderAndLightning", "boilerplate", "laravel"],
@@ -132,13 +132,13 @@
                 ]
             },
             "pre-commit": [
-                "docker-compose exec -T laravel-api composer run pre-commit"
+                "docker-compose exec -T xdev-api composer run pre-commit"
             ],
             "pre-push": [
-                "docker-compose exec -T laravel-api composer run pre-push"
+                "docker-compose exec -T xdev-api composer run pre-push"
             ],
             "post-merge": [
-                "docker-compose exec -T laravel-api composer run post-merge"
+                "docker-compose exec -T xdev-api composer run post-merge"
             ]
         }
     },

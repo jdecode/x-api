@@ -1,18 +1,18 @@
 ## First Run : One-command-to-rule-them-all
 ```
-git clone git@github.com:founderandlightning/fl-laravel_boilerplate.git \
-&& cd fl-laravel_boilerplate \
+git clone git@github.com:founderandlightning/xdev.git \
+&& cd xdev \
 && docker-compose up --build -d \
-&& docker-compose exec laravel-api composer install \
-&& docker-compose exec laravel-api composer run dev-setup \
+&& docker-compose exec xdev-api composer install \
+&& docker-compose exec xdev-api composer run dev-setup \
 && git config core.filemode false 
 ```
 
 ```
-http://22.95.1.1
+http://100.10.1.1
 ```
 
-Admin URL (also accessible from the above link) : `http://22.95.1.1/admin`
+Admin URL (also accessible from the above link) : `http://100.10.1.1/admin`
 
 Admin credentials : `admin@admin.com / admin`
 
@@ -24,17 +24,17 @@ Everything should be working fine. If not, please open an issue.
 
 
 Port mappings in `docker-compose.yml` are as following:
-1. **295 : 80**
+1. **1001 : 80**
    1. HTTP
-   1. Service-and-container name = `laravel-api`
-   1. IP = `22.95.1.1`
-1. **296 : 296**
+   1. Service-and-container name = `xdev-api`
+   1. IP = `100.10.1.1`
+1. **1010 : 1010**
    1. Vite
    1. Config file : `vite.config.js`
-1. **297: 5432**
+1. **1100: 5432**
    1. Postgres
-   1. Service-and-container name = `laravel-pg`
-   1. IP = `22.95.1.2`
+   1. Service-and-container name = `xdev-pg`
+   1. IP = `100.10.1.2`
 
 
 Files to update service/container names:

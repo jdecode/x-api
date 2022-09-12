@@ -1,52 +1,52 @@
 version : "3"
 services:
-  laravel-api:
+  xdev-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel-api
+    container_name: xdev-api
     depends_on:
-      - laravel-pg
+      - xdev-pg
     volumes:
       - .:/var/www/html
     restart: always
     ports:
-      - "295:80"
-      - "296:296"
+      - "1001:80"
+      - "1010:1010"
     environment:
-      APP_NAME: 'Laravel Boilerplate | LBP'
+      APP_NAME: 'Laravel Boilerplate for 10x developers'
       APP_DEBUG: 'true'
-      APP_URL: 'http://22.95.1.1'
+      APP_URL: 'http://100.10.1.1'
       DB_CONNECTION: 'pgsql'
       QUEUE_CONNECTION: 'database'
       XDEBUG_CONFIG: "mode=debug,coverage,develop client_host=host.docker.internal discover_client_host=1 start_with_request=yes"
-      GITHUB_USERNAME: 'founderandlightning'
-      GITHUB_REPONAME: 'fl-laravel_boilerplate'
+      GITHUB_USERNAME: 'jdecode'
+      GITHUB_REPONAME: 'xdev'
     networks:
-      laravel-api-network:
-        ipv4_address: 22.95.1.1
+      xdev-api-network:
+        ipv4_address: 100.10.1.1
     extra_hosts:
       - host.docker.internal:host-gateway
 
-  laravel-pg:
+  xdev-pg:
     image: postgres:latest
     ports:
-        - "297:5432"
+        - "1100:5432"
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: test_db
-    container_name: laravel-pg
+    container_name: xdev-pg
     volumes:
-      - laravel-pg-disk:/var/lib/postgres
+      - xdev-pg-disk:/var/lib/postgres
     networks:
-      laravel-api-network:
-        ipv4_address: 22.95.1.2
+      xdev-api-network:
+        ipv4_address: 100.10.1.2
 
-  laravel-tf:
+  xdev-tf:
       build:
         context: .
         dockerfile: terraform/Dockerfile
-      container_name: laravel-tf
+      container_name: xdev-tf
       volumes:
           - .:/var/www/html
       environment:
@@ -57,17 +57,17 @@ services:
         CIRCLECI_API_KEY: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
       networks:
-        laravel-api-network:
-          ipv4_address: 22.95.1.3
+        xdev-api-network:
+          ipv4_address: 100.10.1.3
 
 # On-disk storage of DB data, when containers are stopped
 volumes:
-  laravel-pg-disk: {}
+  xdev-pg-disk: {}
 
 # Local network for services running using this docker-compose config
 networks:
-  laravel-api-network:
+  xdev-api-network:
     ipam:
       driver: default
       config:
-        - subnet: 22.95.0.0/16
+        - subnet: 100.10.0.0/16

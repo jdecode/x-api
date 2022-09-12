@@ -9,7 +9,7 @@ export default defineConfig({
                 "!**/vendor/**"
             ]
         },
-        "port": 296
+        "port": 1010
     },
     plugins: [
         laravel({
