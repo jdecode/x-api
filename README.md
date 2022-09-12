@@ -1,6 +1,6 @@
 ## First Run : One-command-to-rule-them-all
 ```
-git clone git@github.com:founderandlightning/xdev.git \
+git clone git@github.com:jdecode/xdev.git \
 && cd xdev \
 && docker-compose up --build -d \
 && docker-compose exec xdev-api composer install \
