@@ -52,6 +52,6 @@ Files to update port numbers:
 1. `vite.config.js`
 
 
-#### Default landing page screenshot
+#### Default landing page screenshot [Name/IP on the screenshot may be different]
 <img src="https://user-images.githubusercontent.com/37613346/189156361-97fae29c-ad61-4720-9462-1e6827342391.png" width="600" />
 
