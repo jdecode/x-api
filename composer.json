@@ -1,8 +1,8 @@
 {
-    "name": "founderandlightning/xdev",
+    "name": "jdecode/xdev",
     "type": "boilerplate",
-    "description": "Laravel Boilerplate | LBP",
-    "keywords": ["FounderAndLightning", "boilerplate", "laravel"],
+    "description": "Laravel Boilerplate for 10x developer",
+    "keywords": ["jdecode", "xdev", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
