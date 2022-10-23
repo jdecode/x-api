@@ -19,6 +19,6 @@ jobs:
       - name: Docker Compose
         run: docker-compose up -d
       - name: Composer install [ + npm install && npm run build]
-        run: docker-compose exec -T xdev-api composer install
+        run: docker-compose exec -T api-jdecode-dev-api composer install
       - name: CI checks
-        run: docker-compose exec -T xdev-api composer run ci
+        run: docker-compose exec -T api-jdecode-dev-api composer run ci

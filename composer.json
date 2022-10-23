@@ -1,8 +1,8 @@
 {
-    "name": "jdecode/xdev",
+    "name": "jdecode/api-jdecode-dev",
     "type": "boilerplate",
     "description": "Laravel Boilerplate for 10x developer",
-    "keywords": ["jdecode", "xdev", "laravel"],
+    "keywords": ["jdecode", "api-jdecode-dev", "laravel"],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -132,13 +132,13 @@
                 ]
             },
             "pre-commit": [
-                "docker-compose exec -T xdev-api composer run pre-commit"
+                "docker-compose exec -T api-jdecode-dev-api composer run pre-commit"
             ],
             "pre-push": [
-                "docker-compose exec -T xdev-api composer run pre-push"
+                "docker-compose exec -T api-jdecode-dev-api composer run pre-push"
             ],
             "post-merge": [
-                "docker-compose exec -T xdev-api composer run post-merge"
+                "docker-compose exec -T api-jdecode-dev-api composer run post-merge"
             ]
         }
     },

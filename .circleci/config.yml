@@ -12,13 +12,13 @@ jobs:
           command: docker-compose up -d
       - run:
           name: Composer install
-          command: docker-compose exec xdev-api composer install -n --prefer-dist
+          command: docker-compose exec api-jdecode-dev-api composer install -n --prefer-dist
       - run:
           name: CI checks
-          command: docker-compose exec xdev-api composer run ci
+          command: docker-compose exec api-jdecode-dev-api composer run ci
       #- run:
       #    name: Run Newman testcases [Comment out, if you do not use Postman]
-      #    command: docker-compose exec xdev-api newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
+      #    command: docker-compose exec api-jdecode-dev-api newman run https://api.getpostman.com/collections/${POSTMAN_COLLECTION_ID}?apikey=${POSTMAN_API_KEY} -e https://api.getpostman.com/environments/${POSTMAN_ENV_ID}?apikey=${POSTMAN_API_KEY}
 
   cd:
     machine:
