@@ -37,7 +37,7 @@ services:
       POSTGRES_DB: test_db
     container_name: Xdev-pg
     volumes:
-      - Xdev-pg-disk:/var/lib/postgres
+      - xdev-pg-disk:/var/lib/postgres
     networks:
       Xdev-api-network:
         ipv4_address: 100.10.1.2
