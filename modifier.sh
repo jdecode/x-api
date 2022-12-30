@@ -13,10 +13,10 @@ XDEV_PORT_DB='1100'
 
 # Project variables: Please update these before running the script
 PROJECT_USERNAME='jdecode'
-PROJECT_REPO='api-jdecode-dev'
-PROJECT_API_SERVICE_NAME="jdecode-dev-api"
-PROJECT_PG_SERVICE_NAME="jdecode-dev-pg"
-PROJECT_TF_SERVICE_NAME="jdecode-dev-tf"
+PROJECT_REPO='xdev'
+PROJECT_API_SERVICE_NAME="xdev-api"
+PROJECT_PG_SERVICE_NAME="xdev-pg"
+PROJECT_TF_SERVICE_NAME="xdev-tf"
 PROJECT_IP_FIRST_TWO_OCTETS='222.222'
 PROJECT_PORT_HTTP='2222'
 PROJECT_PORT_VITE='2022'
