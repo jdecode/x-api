@@ -39,7 +39,7 @@ services:
     volumes:
       - xdev-pg-disk:/var/lib/postgres
     networks:
-      Xdev-api-network:
+      xdev-api-network:
         ipv4_address: 100.10.1.2
 
   xdev-tf:
