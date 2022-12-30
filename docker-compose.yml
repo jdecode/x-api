@@ -35,7 +35,7 @@ services:
     environment:
       POSTGRES_PASSWORD: docker
       POSTGRES_DB: test_db
-    container_name: Xdev-pg
+    container_name: xdev-pg
     volumes:
       - xdev-pg-disk:/var/lib/postgres
     networks:
