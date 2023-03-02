@@ -21,10 +21,14 @@
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^7.0",
+        "nunomaduro/collision": "^6.1",
+        "nunomaduro/phpinsights": "^2.7",
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-laravel": "^1.4",
+        "pestphp/pest-plugin-parallel": "^1.2",
         "php-parallel-lint/php-parallel-lint": "^1.3",
         "phpmd/phpmd": "^2.13",
-        "phpunit/phpunit": "^10.0",
+        "phpunit/phpunit": "^9.6",
         "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
@@ -71,6 +75,7 @@
         "phpmd": "vendor/bin/phpmd . text phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests",
         "security-checker": "vendor/bin/security-checker security:check",
         "pint": "vendor/bin/pint app",
+        "pest": "vendor/bin/pest --stop-on-failure --parallel",
         "pre-commit": [
             "@parallel-lint",
             "@phpmd",
@@ -114,7 +119,8 @@
         "sort-packages": true,
         "allow-plugins": {
             "pestphp/pest-plugin": true,
-            "php-http/discovery": true
+            "php-http/discovery": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true
         }
     },
     "minimum-stability": "stable",
