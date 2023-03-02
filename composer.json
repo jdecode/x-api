@@ -60,6 +60,7 @@
         ],
         "dev": [
             "@post-root-package-install",
+            "@putenv CACHE_DRIVER=file",
             "@post-create-project-cmd",
             "@php artisan migrate",
             "chmod -R 777 storage bootstrap",
