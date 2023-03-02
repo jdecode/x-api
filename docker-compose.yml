@@ -50,6 +50,7 @@ services:
 
   x-mailpit:
     image: 'axllent/mailpit:latest'
+    container_name: x-mailpit
     ports:
       - '${FORWARD_MAILPIT_PORT:-1010}:1025'
       - '${FORWARD_MAILPIT_DASHBOARD_PORT:-1100}:8025'
