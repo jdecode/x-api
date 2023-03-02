@@ -57,12 +57,55 @@
             "@post-root-package-install",
             "@post-create-project-cmd",
             "@php artisan migrate",
-            "chmod -R 777 storage bootstrap"
+            "chmod -R 777 storage bootstrap",
+            "@cghooks",
+            "@ide-helper"
+        ],
+        "cghooks": "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+        "ide-helper": [
+            "@php artisan ide-helper:generate -n",
+            "@php artisan ide-helper:meta -n",
+            "@php artisan ide-helper:models -n"
+        ],
+        "parallel-lint": "vendor/bin/parallel-lint app --colors",
+        "phpmd": "vendor/bin/phpmd . text phpmd_ruleset.xml --exclude vendor,_ide_helper.php,database,app/Console/Kernel.php,tests",
+        "security-checker": "vendor/bin/security-checker security:check",
+        "pint": "vendor/bin/pint app",
+        "pre-commit": [
+            "@parallel-lint",
+            "@phpmd",
+            "@security-checker",
+            "@pint"
+        ],
+        "pre-push": [
+            "@pint"
+        ],
+        "post-merge": [
+            "@php artisan migrate",
+            "composer install",
+            "echo \"\nSeed, if in need: \\e[32mphp artisan db:seed\\e[0m\"\n"
         ]
     },
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "hooks": {
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit",
+                    "pre-push"
+                ]
+            },
+            "pre-commit": [
+                "docker-compose exec -T x-api composer run pre-commit"
+            ],
+            "pre-push": [
+                "docker-compose exec -T x-api composer run pre-push"
+            ],
+            "post-merge": [
+                "docker-compose exec -T x-api composer run post-merge"
+            ]
         }
     },
     "config": {
