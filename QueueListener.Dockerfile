@@ -1,3 +1,3 @@
-FROM devopsfnl/image:p82-n18-pg
+FROM jdecode/xdev:php-8.2
 
 ENTRYPOINT ["/var/www/html/queue-listener"]

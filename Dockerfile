@@ -1,3 +1,3 @@
-FROM devopsfnl/image:p82-n18-pg
+FROM jdecode/xdev:php-npx
 
 ENTRYPOINT ["/var/www/html/local-runner"]
