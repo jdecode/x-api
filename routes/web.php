@@ -17,3 +17,7 @@ Route::get('/', function () {
     return ['laravel' => app()->version(), 'route' => 'web'];
 });
 
+Route::get('/dashboard', function () {
+    return ['laravel' => app()->version(),'this-is' => 'dashboard'];
+});
+
