@@ -78,6 +78,7 @@
         "security-checker": "vendor/bin/security-checker security:check",
         "pint": "vendor/bin/pint app",
         "pest": "vendor/bin/pest --stop-on-failure --parallel",
+        "p": "vendor/bin/pest --stop-on-failure --parallel --coverage",
         "pre-commit": [
             "@parallel-lint",
             "@phpmd",
