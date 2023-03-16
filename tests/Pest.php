@@ -11,9 +11,11 @@
 |
 */
 
+use App\Models\User;
+
 uses(
     Tests\TestCase::class,
-    // Illuminate\Foundation\Testing\RefreshDatabase::class,
+    Illuminate\Foundation\Testing\RefreshDatabase::class,
 )->in('Feature');
 
 /*
@@ -42,7 +44,14 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+function createUnverifiedUser(): array
 {
-    // ..
+    $password = 'password';
+    $user = User::factory()
+        ->unverified()
+        ->make(['password' => Hash::make($password)])
+        ->only(['name', 'email', 'password']);
+    $user['password'] = $password;
+    $user['password_confirmation'] = $password;
+    return $user;
 }
