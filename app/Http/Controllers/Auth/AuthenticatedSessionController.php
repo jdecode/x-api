@@ -13,13 +13,19 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): Response
+    public function store(LoginRequest $request): \Illuminate\Http\JsonResponse
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $remember = $request->input('remember') ?? null;
 
-        return response()->noContent();
+        isset($remember) ? $expiresAt = now()->addDays(14) : $expiresAt = now()->addDay();
+        $token = Auth::user()->createToken(request()->header('User-Agent'), ["*"], $expiresAt)->plainTextToken;
+
+        return response()->json([
+            'token' => $token,
+            'expires_at' => $expiresAt,
+        ]);
     }
 
     /**
