@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Http\Request;
@@ -20,16 +22,24 @@ Route::get('/', function () {
     return ['laravel' => app()->version(), 'route' => 'api'];
 });
 
-Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/register', [RegisteredUserController::class, 'store'])
-    ->middleware('guest')
-    ->name('register');
+Route::middleware(['guest'])->group(function () {
+    Route::post('/register', [RegisteredUserController::class, 'store'])
+        ->name('register');
 
-Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
-    ->middleware(['signed', 'throttle:6,1'])
-    ->name('verification.verify');
+    Route::get('/verify-email/{id}/{hash}', VerifyEmailController::class)
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
 
-require __DIR__.'/auth.php';
+    Route::post('/login', [AuthenticatedSessionController::class, 'store'])
+        ->name('login');
+
+    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->name('password.email');
+
+});
+
+require_once __DIR__ . '/auth.php';
