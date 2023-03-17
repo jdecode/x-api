@@ -22,38 +22,35 @@ services:
 
   x-pg:
     image: postgres:latest
-    ports:
-        - "1001:5432"
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: testing
     container_name: x-pg
     volumes:
       - x-pg-disk:/var/lib/postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testing
     networks:
       x-network:
         ipv4_address: 100.10.1.2
 
   x-q:
-      depends_on:
-        - x-api
-      restart: unless-stopped
-      build:
-        context: .
-        dockerfile: QueueListener.Dockerfile
-      container_name: x-q
-      volumes:
-          - .:/var/www/html
-      networks:
-        x-network:
-          ipv4_address: 100.10.1.3
+    build:
+      context: .
+      dockerfile: QueueListener.Dockerfile
+    container_name: x-q
+    depends_on:
+      - x-api
+    volumes:
+      - .:/var/www/html
+    restart: unless-stopped
+    networks:
+      x-network:
+        ipv4_address: 100.10.1.3
 
   x-mailpit:
     image: 'axllent/mailpit:latest'
     container_name: x-mailpit
-    ports:
-      - '${FORWARD_MAILPIT_PORT:-1010}:1025'
-      - '${FORWARD_MAILPIT_DASHBOARD_PORT:-1100}:8025'
+    restart: always
     networks:
       x-network:
         ipv4_address: 100.10.1.4
