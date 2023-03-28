@@ -3,7 +3,7 @@ services:
   x-api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Api.Dockerfile
     container_name: x-api
     depends_on:
       - x-pg
