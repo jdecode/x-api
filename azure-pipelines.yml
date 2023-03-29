@@ -42,5 +42,5 @@ stages:
       displayName: 'Azure Web App on Container Deploy'
       inputs:
         azureSubscription: 'service-conn-jdecode-x-api-02-RM'
-        appName: $(appName)
+        appName: 'web-app-jdecode-x-api-02'
         imageName: $(containerRegistry)/$(imageRepository):$(tag)
