@@ -1,3 +1,9 @@
 FROM jdecode/xdev:php-npx
 
-ENTRYPOINT ["/var/www/html/local-runner"]
+COPY . /var/www/html
+
+RUN composer install -n --prefer-dist
+
+RUN chmod +x /var/www/html/deployer
+
+ENTRYPOINT ["/var/www/html/deployer"]

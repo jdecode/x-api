@@ -1,0 +1,6 @@
+#!/bin/bash
+
+composer run deployer
+
+apache2-foreground
+
