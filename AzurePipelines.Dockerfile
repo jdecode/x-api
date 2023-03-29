@@ -1,10 +1,12 @@
 FROM jdecode/xdev:php-npx
 
-COPY . /var/www/html
+WORKDIR /var/www/html
 
-RUN composer install -n --prefer-dist
+COPY ./index.php /var/www/html/index.php
 
-RUN composer run deployer
+#RUN composer install -n --prefer-dist
+
+#RUN composer run deployer
 
 #RUN chmod +x /var/www/html/deployer
 #
