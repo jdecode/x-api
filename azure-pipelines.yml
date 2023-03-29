@@ -1,52 +1,32 @@
-# Docker
-# Build and push an image to Azure Container Registry
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+pool:
+  name: Azure Pipelines
+steps:
+  - task: Docker@0
+    displayName: 'Build an image'
+    inputs:
+      azureSubscription: 'sercon-jdecode-x3'
+      azureContainerRegistry: '{"loginServer":"jdecodex3.azurecr.io", "id" : "/subscriptions/a0c165fa-1553-4e7f-9042-adf184aa0f1e/resourceGroups/x-3/providers/Microsoft.ContainerRegistry/registries/jdecodex3"}'
+      dockerFile: '**/AzurePipelines.Dockerfile'
+      imageName: '$(Build.Repository.Name)'
+      additionalImageTags: '$(Build.BuildId)'
+      includeLatestTag: true
 
-trigger:
-- main
+  - task: Docker@0
+    displayName: 'Push an image'
+    inputs:
+      azureSubscription: 'sercon-jdecode-x3'
+      azureContainerRegistry: '{"loginServer":"jdecodex3.azurecr.io", "id" : "/subscriptions/a0c165fa-1553-4e7f-9042-adf184aa0f1e/resourceGroups/x-3/providers/Microsoft.ContainerRegistry/registries/jdecodex3"}'
+      action: 'Push an image'
+      imageName: '$(Build.Repository.Name)'
+      additionalImageTags: '$(Build.BuildId)'
+      includeLatestTag: true
 
-resources:
-- repo: self
-
-variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'ac6dba23-45a6-4fc3-89ef-ff8f6d0142fc'
-  imageRepository: 'jdecodex3'
-  containerRegistry: 'jdecodex3.azurecr.io'
-  dockerfilePath: '**/AzurePipelines.Dockerfile'
-  tag: '$(Build.BuildId)'
-
-  # Agent VM image name
-  vmImageName: 'ubuntu-latest'
-
-stages:
-- stage: Build
-  displayName: Build and push stage
-  jobs:
-  - job: Build
-    displayName: Build
-    pool:
-      vmImage: $(vmImageName)
-    steps:
-    - task: Docker@2
-      displayName: Build and push an image to container registry
-      inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
-        tags: |
-          $(tag)
-
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'sercon-jdecode-x3'
-        appType: 'webAppContainer'
-        WebAppName: 'webapp-jdecode-x3'
-        deployToSlotOrASE: true
-        ResourceGroupName: 'x-3'
-        SlotName: 'production'
-        DockerNamespace: 'jdecodex3.azurecr.io'
-        DockerRepository: $(imageRepository)
-        DockerImageTag: $(tag)
+  - task: AzureRmWebAppDeployment@4
+    displayName: 'Azure App Service Deploy: webapp-jdecode-x3'
+    inputs:
+      azureSubscription: 'sercon-jdecode-x3'
+      appType: webAppContainer
+      WebAppName: 'webapp-jdecode-x3'
+      DockerNamespace: jdecodex3.azurecr.io
+      DockerRepository: '$(Build.Repository.Name)'
+      DockerImageTag: '$(Build.BuildId)'
