@@ -41,6 +41,6 @@ stages:
     - task: AzureWebAppContainer@1
       displayName: 'Azure Web App on Container Deploy'
       inputs:
-        azureSubscription: $(azureSubscription)
+        azureSubscription: 'HDFC-Debit'
         appName: $(appName)
         imageName: $(containerRegistry)/$(imageRepository):$(tag)
