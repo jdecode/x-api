@@ -41,7 +41,7 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'service-conn-jdecode-x3'
+        azureSubscription: 'sercon-jdecode-x3'
         appType: 'webAppContainer'
         WebAppName: 'webapp-jdecode-x3'
         deployToSlotOrASE: true
