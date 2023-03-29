@@ -37,14 +37,3 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
-    - task: AzureRmWebAppDeployment@4
-      inputs:
-        ConnectionType: 'AzureRM'
-        azureSubscription: 'HDFC-Debit(a0c165fa-1553-4e7f-9042-adf184aa0f1e)'
-        appType: 'webAppContainer'
-        WebAppName: 'web-app-jdecode-x-api-02'
-        deployToSlotOrASE: true
-        ResourceGroupName: 'jdecode-x-api-02'
-        SlotName: 'production'
-        DockerNamespace: 'jdecode0x0api002.azurecr.io'
-        DockerRepository: 'jdecodexapi02'
