@@ -4,6 +4,8 @@ COPY . /var/www/html
 
 RUN composer install -n --prefer-dist
 
-RUN chmod +x /var/www/html/deployer
+RUN composer run deployer
 
-ENTRYPOINT ["/var/www/html/deployer"]
+#RUN chmod +x /var/www/html/deployer
+#
+#ENTRYPOINT ["/var/www/html/deployer"]
