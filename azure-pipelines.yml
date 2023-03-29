@@ -10,10 +10,10 @@ resources:
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: 'f526cff7-f7ad-463d-a1d5-3c3c0a5c5276'
-  imageRepository: 'jdecodexapi'
-  containerRegistry: 'jdecode0x0api.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerRegistryServiceConnection: 'a64851f1-e830-40dd-bd11-4fbcff094d76'
+  imageRepository: 'jdecodexapi02'
+  containerRegistry: 'jdecode0x0api002.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/AzurePipelines.Dockerfile'
   tag: '$(Build.BuildId)'
 
   # Agent VM image name
@@ -37,3 +37,10 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+
+    - task: AzureWebAppContainer@1
+      displayName: 'Azure Web App on Container Deploy'
+      inputs:
+        azureSubscription: $(azureSubscription)
+        appName: $(appName)
+        imageName: $(containerRegistry)/$(imageRepository):$(tag)
