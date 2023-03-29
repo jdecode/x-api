@@ -41,7 +41,7 @@ stages:
     - task: AzureRmWebAppDeployment@4
       inputs:
         ConnectionType: 'AzureRM'
-        azureSubscription: 'a0c165fa-1553-4e7f-9042-adf184aa0f1e'
+        azureSubscription: '349b4214-7819-4a7a-8a3d-663a64d46258'
         appType: 'webAppContainer'
         WebAppName: 'webapp-jdecode-x3'
         deployToSlotOrASE: true
