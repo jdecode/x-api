@@ -41,6 +41,6 @@ stages:
     - task: AzureWebAppContainer@1
       displayName: 'Azure Web App on Container Deploy'
       inputs:
-        azureSubscription: 'jdecode-x-api-02-service-conn'
+        azureSubscription: 'service-conn-jdecode-x-api-02-RM'
         appName: $(appName)
         imageName: $(containerRegistry)/$(imageRepository):$(tag)
