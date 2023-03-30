@@ -1,0 +1,82 @@
+version : "3"
+services:
+  lbp-api:
+    build:
+      context: .
+      dockerfile: dockerfiles/Api.Dockerfile
+    container_name: lbp-api
+    depends_on:
+      - lbp-pg
+    volumes:
+      - .:/var/www/html
+    restart: always
+    ports:
+      - "1010:80"
+    environment:
+      APP_NAME: "Laravel API boilerplate"
+    networks:
+      lbp-network:
+        ipv4_address: 10.10.1.1
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  lbp-pg:
+    image: postgres:15
+    container_name: lbp-pg
+    volumes:
+      - lbp-pg-disk:/var/lib/postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testing
+    networks:
+      lbp-network:
+        ipv4_address: 10.10.1.2
+
+  lbp-mailpit:
+    image: 'axllent/mailpit:latest'
+    container_name: lbp-mailpit
+    restart: always
+    networks:
+      lbp-network:
+        ipv4_address: 10.10.1.3
+
+  lbp-q:
+    build:
+      context: .
+      dockerfile: dockerfiles/QueueListener.Dockerfile
+    container_name: lbp-q
+    depends_on:
+      - lbp-api
+    volumes:
+      - .:/var/www/html
+    restart: unless-stopped
+    networks:
+      lbp-network:
+        ipv4_address: 10.10.1.4
+
+  lbp-0x:
+    build:
+      context: .
+      dockerfile: dockerfiles/SansXdebug.Dockerfile
+    container_name: lbp-0x
+    depends_on:
+      - lbp-api
+    volumes:
+      - .:/var/www/html
+    restart: always
+    networks:
+      lbp-network:
+        ipv4_address: 10.10.1.5
+
+# On-disk storage of DB data, when containers are stopped
+volumes:
+  lbp-pg-disk: {}
+
+# Local network for services running using this docker-compose config
+networks:
+  lbp-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.0.0/16
