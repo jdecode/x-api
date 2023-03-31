@@ -25,6 +25,7 @@
         "nunomaduro/collision": "^7.0",
         "pestphp/pest": "^2.3",
         "pestphp/pest-plugin-laravel": "^2.0",
+        "phpmd/phpmd": "^2.13",
         "phpunit/phpunit": "^10.0",
         "spatie/laravel-ignition": "^2.0"
     },
@@ -53,11 +54,60 @@
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
+        ],
+        "dev": [
+            "@post-root-package-install",
+            "@putenv CACHE_DRIVER=file",
+            "@post-create-project-cmd",
+            "@php artisan migrate",
+            "chmod -R 777 storage bootstrap",
+            "@cghooks",
+            "@ide-helper"
+        ],
+        "cghooks": "[ -f vendor/bin/cghooks ] && vendor/bin/cghooks update || echo 'cghooks not found'",
+        "ide-helper": [
+            "@php artisan ide-helper:generate -n",
+            "@php artisan ide-helper:meta -n",
+            "@php artisan ide-helper:models -n"
+        ],
+        "phpmd": "vendor/bin/phpmd app text phpmd_ruleset.xml",
+        "security-checker": "vendor/bin/security-checker security:check",
+        "pint": "vendor/bin/pint app tests",
+        "pest": "vendor/bin/pest --stop-on-error --stop-on-failure --parallel --compact",
+        "pre-commit": [
+            "@pint",
+            "@phpmd",
+            "@security-checker"
+        ],
+        "pre-push": [
+            "@pest"
+        ],
+        "post-merge": [
+            "@php artisan migrate",
+            "composer install",
+            "echo \"\nSeed, if in need: \\e[32mphp artisan db:seed\\e[0m\"\n"
         ]
     },
     "extra": {
         "laravel": {
             "dont-discover": []
+        },
+        "hooks": {
+            "config": {
+                "stop-on-failure": [
+                    "pre-commit",
+                    "pre-push"
+                ]
+            },
+            "pre-commit": [
+                "docker-compose exec -T lbp-api composer run pre-commit"
+            ],
+            "pre-push": [
+                "docker-compose exec -T lbp-api composer run pre-push"
+            ],
+            "post-merge": [
+                "docker-compose exec -T lbp-api composer run post-merge"
+            ]
         }
     },
     "config": {
