@@ -1,47 +1,26 @@
-name: Tests
+name: CI
 
 on:
   push:
+    paths:
+      - '**/.php'
+      - '.env.*'
     branches:
-      - master
-      - '*.x'
-  pull_request:
+      - main
   schedule:
     - cron: '0 0 * * *'
 
-permissions:
-  contents: read
-
 jobs:
-  tests:
+  CI:
     runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: true
-      matrix:
-        php: [8.1, 8.2]
-
-    name: PHP ${{ matrix.php }}
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: ${{ matrix.php }}
-          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
-          coverage: none
+      - name: Docker Compose
+        run: docker-compose up -d
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-interaction --no-progress
+      - name: Composer install
+        run: docker-compose exec -T lbp-0x composer install
 
-      - name: Copy environment file
-        run: cp .env.example .env
-
-      - name: Generate app key
-        run: php artisan key:generate
-
-      - name: Execute tests
-        run: vendor/bin/phpunit
+      - name: CI checks
+        run: docker-compose exec -T lbp-0x composer run ci

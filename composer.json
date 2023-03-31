@@ -1,11 +1,11 @@
 {
-    "name": "laravel/laravel",
-    "type": "project",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "founderandlightning/fl-laravel_boilerplate",
+    "type": "boilerplate",
+    "description": "Laravel Boilerplate | LBP",
+    "keywords": ["FounderAndLightning", "boilerplate", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
